@@ -353,7 +353,7 @@ __sdcc_program_startup:
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
 ;i                         Allocated to registers r6 r7 
-;j                         Allocated to registers r6 r7 
+;j                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
 ;	main.c:3: void main()
 ;	-----------------------------------------
@@ -368,50 +368,57 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:6: P2=0xfe;
-	mov	_P2,#0xfe
 ;	main.c:7: for(i=0;i<30000;i++);
 	mov	r6,#0x30
 	mov	r7,#0x75
 00109$:
 	dec	r6
-	cjne	r6,#0xff,00145$
+	cjne	r6,#0xff,00148$
 	dec	r7
-00145$:
+00148$:
 	mov	a,r6
 	orl	a,r7
 	jnz	00109$
+	mov	r6,#0x30
+	mov	r7,#0x75
 ;	main.c:10: for(j=0;j<8;j++)
 00121$:
-	mov	r6,#0x00
-	mov	r7,#0x00
+	mov	r4,#0x00
+	mov	r5,#0x00
 00113$:
-;	main.c:12: P2>>=3;
-	mov	a,_P2
-	swap	a
-	rl	a
-	anl	a,#0x1f
+;	main.c:12: P2=0xfe<<i;
+	mov	ar3,r6
+	mov	b,r3
+	inc	b
+	mov	a,#0xfe
+	sjmp	00152$
+00150$:
+	add	a,acc
+00152$:
+	djnz	b,00150$
 	mov	_P2,a
-;	main.c:13: for(i=0;i<30000;i++);
-	mov	r4,#0x30
-	mov	r5,#0x75
+;	main.c:13: for(i=0;i<60000;i++);
+	mov	r2,#0x60
+	mov	r3,#0xea
 00112$:
-	dec	r4
-	cjne	r4,#0xff,00147$
-	dec	r5
-00147$:
-	mov	a,r4
-	orl	a,r5
+	dec	r2
+	cjne	r2,#0xff,00153$
+	dec	r3
+00153$:
+	mov	a,r2
+	orl	a,r3
 	jnz	00112$
+	mov	r6,#0x60
+	mov	r7,#0xea
 ;	main.c:10: for(j=0;j<8;j++)
-	inc	r6
-	cjne	r6,#0x00,00149$
-	inc	r7
-00149$:
+	inc	r4
+	cjne	r4,#0x00,00155$
+	inc	r5
+00155$:
 	clr	c
-	mov	a,r6
+	mov	a,r4
 	subb	a,#0x08
-	mov	a,r7
+	mov	a,r5
 	subb	a,#0x00
 	jc	00113$
 ;	main.c:16: }
