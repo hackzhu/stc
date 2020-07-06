@@ -9,8 +9,8 @@ void main()
 	{
 		for(j=0;j<8;j++)
 		{
-			P2=0xfe<<i;
-			for(i=0;i<60000;i++);
+			P2=0xff<<j;
+			for(i=0;i<30000;i++);
 		}
 	}
 }
