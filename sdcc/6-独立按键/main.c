@@ -9,7 +9,7 @@ void main()
 		{
 			for(i=0;i<1000;i++);
 			if(P3_0==0) P2_0=0;
-			while(!P3);
+			while(1);
 		}
 	}
 }

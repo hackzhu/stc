@@ -387,16 +387,14 @@
       000014 4D               [12]  387 	orl	a,r5
       000015 70 F0            [24]  388 	jnz	00114$
                                     389 ;	main.c:11: if(P3_0==0) P2_0=0;
-      000017 20 B0 02         [24]  390 	jb	_P3_0,00104$
+      000017 20 B0 02         [24]  390 	jb	_P3_0,00105$
                                     391 ;	assignBit
       00001A C2 A0            [12]  392 	clr	_P2_0
-                                    393 ;	main.c:12: while(!P3);
-      00001C                        394 00104$:
-      00001C E5 B0            [12]  395 	mov	a,_P3
-      00001E 60 FC            [24]  396 	jz	00104$
-                                    397 ;	main.c:15: }
-      000020 80 DE            [24]  398 	sjmp	00110$
-                                    399 	.area CSEG    (CODE)
-                                    400 	.area CONST   (CODE)
-                                    401 	.area XINIT   (CODE)
-                                    402 	.area CABS    (ABS,CODE)
+                                    393 ;	main.c:12: while(1);
+      00001C                        394 00105$:
+                                    395 ;	main.c:15: }
+      00001C 80 FE            [24]  396 	sjmp	00105$
+                                    397 	.area CSEG    (CODE)
+                                    398 	.area CONST   (CODE)
+                                    399 	.area XINIT   (CODE)
+                                    400 	.area CABS    (ABS,CODE)

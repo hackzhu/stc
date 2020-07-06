@@ -387,15 +387,13 @@ _main:
 	orl	a,r5
 	jnz	00114$
 ;	main.c:11: if(P3_0==0) P2_0=0;
-	jb	_P3_0,00104$
+	jb	_P3_0,00105$
 ;	assignBit
 	clr	_P2_0
-;	main.c:12: while(!P3);
-00104$:
-	mov	a,_P3
-	jz	00104$
+;	main.c:12: while(1);
+00105$:
 ;	main.c:15: }
-	sjmp	00110$
+	sjmp	00105$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)
