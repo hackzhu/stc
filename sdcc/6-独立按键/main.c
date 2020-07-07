@@ -1,15 +1,20 @@
 #include <8052.h>
 
+void delay(unsigned int i)
+{
+	while(i--);
+}
+
+
 void main()
 {
-	unsigned int i;
+	P2_0=1;
 	while(1)
 	{
 		if(P3_0==0)
 		{
-			for(i=0;i<1000;i++);
-			if(P3_0==0) P2_0=0;
-			while(1);
+			delay(1000);
+			if(P3_0==0) P2_0=!P2_0;
 		}
 	}
 }

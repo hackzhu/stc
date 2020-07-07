@@ -9,6 +9,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
+	.globl _delay
 	.globl _TF2
 	.globl _EXF2
 	.globl _RCLK
@@ -350,15 +351,15 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
+;Allocation info for local variables in function 'delay'
 ;------------------------------------------------------------
-;i                         Allocated to registers r6 r7 
+;i                         Allocated to registers 
 ;------------------------------------------------------------
-;	main.c:3: void main()
+;	main.c:3: void delay(unsigned int i)
 ;	-----------------------------------------
-;	 function main
+;	 function delay
 ;	-----------------------------------------
-_main:
+_delay:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -367,33 +368,44 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:6: while(1)
-00110$:
-;	main.c:8: if(P3_0==0)
-	jb	_P3_0,00110$
-;	main.c:10: for(i=0;i<1000;i++);
-	mov	r6,#0xe8
-	mov	r7,#0x03
-00114$:
-	mov	a,r6
-	add	a,#0xff
-	mov	r4,a
-	mov	a,r7
-	addc	a,#0xff
-	mov	r5,a
-	mov	ar6,r4
-	mov	ar7,r5
+	mov	r6,dpl
+	mov	r7,dph
+;	main.c:5: while(i--);
+00101$:
+	mov	ar4,r6
+	mov	ar5,r7
+	dec	r6
+	cjne	r6,#0xff,00111$
+	dec	r7
+00111$:
 	mov	a,r4
 	orl	a,r5
-	jnz	00114$
-;	main.c:11: if(P3_0==0) P2_0=0;
-	jb	_P3_0,00105$
+	jnz	00101$
+;	main.c:6: }
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'main'
+;------------------------------------------------------------
+;	main.c:9: void main()
+;	-----------------------------------------
+;	 function main
+;	-----------------------------------------
+_main:
+;	main.c:11: P2_0=1;
 ;	assignBit
-	clr	_P2_0
-;	main.c:12: while(1);
-00105$:
-;	main.c:15: }
-	sjmp	00105$
+	setb	_P2_0
+;	main.c:12: while(1)
+00106$:
+;	main.c:14: if(P3_0==0)
+	jb	_P3_0,00106$
+;	main.c:16: delay(1000);
+	mov	dptr,#0x03e8
+	lcall	_delay
+;	main.c:17: if(P3_0==0) P2_0=!P2_0;
+	jb	_P3_0,00106$
+	cpl	_P2_0
+;	main.c:20: }
+	sjmp	00106$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)
