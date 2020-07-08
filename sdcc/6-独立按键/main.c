@@ -8,7 +8,6 @@ void delay(unsigned int i)
 
 void main()
 {
-	P2_0=1;
 	while(1)
 	{
 		if(P3_0==0)

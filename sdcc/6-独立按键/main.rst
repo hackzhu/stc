@@ -391,25 +391,22 @@
                                     391 ;	 function main
                                     392 ;	-----------------------------------------
       000074                        393 _main:
-                                    394 ;	main.c:11: P2_0=1;
-                                    395 ;	assignBit
-      000074 D2 A0            [12]  396 	setb	_P2_0
-                                    397 ;	main.c:12: while(1)
-      000076                        398 00109$:
-                                    399 ;	main.c:14: if(P3_0==0)
-      000076 20 B0 FD         [24]  400 	jb	_P3_0,00109$
-                                    401 ;	main.c:16: delay(1000);
-      000079 90 03 E8         [24]  402 	mov	dptr,#0x03e8
-      00007C 12 00 62         [24]  403 	lcall	_delay
-                                    404 ;	main.c:17: if(P3_0==0) P2_0=!P2_0;
-      00007F 20 B0 02         [24]  405 	jb	_P3_0,00103$
-      000082 B2 A0            [12]  406 	cpl	_P2_0
-                                    407 ;	main.c:18: while(!P3_0);
-      000084                        408 00103$:
-      000084 30 B0 FD         [24]  409 	jnb	_P3_0,00103$
-                                    410 ;	main.c:21: }
-      000087 80 ED            [24]  411 	sjmp	00109$
-                                    412 	.area CSEG    (CODE)
-                                    413 	.area CONST   (CODE)
-                                    414 	.area XINIT   (CODE)
-                                    415 	.area CABS    (ABS,CODE)
+                                    394 ;	main.c:12: while(1)
+      000074                        395 00109$:
+                                    396 ;	main.c:14: if(P3_0==0)
+      000074 20 B0 FD         [24]  397 	jb	_P3_0,00109$
+                                    398 ;	main.c:16: delay(1000);
+      000077 90 03 E8         [24]  399 	mov	dptr,#0x03e8
+      00007A 12 00 62         [24]  400 	lcall	_delay
+                                    401 ;	main.c:17: if(P3_0==0) P2_0=!P2_0;
+      00007D 20 B0 02         [24]  402 	jb	_P3_0,00103$
+      000080 B2 A0            [12]  403 	cpl	_P2_0
+                                    404 ;	main.c:18: while(!P3_0);
+      000082                        405 00103$:
+      000082 30 B0 FD         [24]  406 	jnb	_P3_0,00103$
+                                    407 ;	main.c:21: }
+      000085 80 ED            [24]  408 	sjmp	00109$
+                                    409 	.area CSEG    (CODE)
+                                    410 	.area CONST   (CODE)
+                                    411 	.area XINIT   (CODE)
+                                    412 	.area CABS    (ABS,CODE)

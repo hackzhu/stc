@@ -391,9 +391,6 @@ _delay:
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	main.c:11: P2_0=1;
-;	assignBit
-	setb	_P2_0
 ;	main.c:12: while(1)
 00109$:
 ;	main.c:14: if(P3_0==0)
