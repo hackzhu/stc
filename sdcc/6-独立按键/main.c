@@ -15,6 +15,7 @@ void main()
 		{
 			delay(1000);
 			if(P3_0==0) P2_0=!P2_0;
+			while(!P3_0);
 		}
 	}
 }
