@@ -373,57 +373,57 @@ _main:
 ;	main.c:5: EA=1;		//打开中断总开关
 ;	assignBit
 	setb	_EA
-;	main.c:7: TR0=1;		//打开定时器
+;	main.c:7: TMOD=0x01;	//选择为定时器0模式，工作方式1，仅用TR0打开启动。
+	mov	_TMOD,#0x01
+;	main.c:12: TR0=1;		//打开定时器
 ;	assignBit
 	setb	_TR0
-;	main.c:8: ET0=1;		//打开定时器0中断
+;	main.c:13: ET0=1;		//打开定时器0中断
 ;	assignBit
 	setb	_ET0
-;	main.c:9: TMOD=0x01;	//选择为定时器0模式，工作方式1，仅用TR0打开启动。
-	mov	_TMOD,#0x01
-;	main.c:11: TH0=0xfc;	//1111 1100
+;	main.c:17: TH0=0xfc;	//1111 1100
 	mov	_TH0,#0xfc
-;	main.c:12: TL0=0x18;	//0001 1000
+;	main.c:18: TL0=0x18;	//0001 1000
 	mov	_TL0,#0x18
-;	main.c:13: while(1);
+;	main.c:19: while(1);
 00102$:
-;	main.c:14: }
+;	main.c:20: }
 	sjmp	00102$
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'Timer0'
 ;------------------------------------------------------------
 ;i                         Allocated with name '_Timer0_i_65536_2'
 ;------------------------------------------------------------
-;	main.c:17: void Timer0() __interrupt 1		//定时器函数
+;	main.c:23: void Timer0() __interrupt 1		//定时器函数
 ;	-----------------------------------------
 ;	 function Timer0
 ;	-----------------------------------------
 _Timer0:
 	push	acc
 	push	psw
-;	main.c:20: TH0=0xfc;	//1111 1100
+;	main.c:26: TH0=0xfc;	//1111 1100
 	mov	_TH0,#0xfc
-;	main.c:21: TL0=0x18;	//0001 1000
+;	main.c:27: TL0=0x18;	//0001 1000
 	mov	_TL0,#0x18
-;	main.c:22: i++;
+;	main.c:28: i++;
 	inc	_Timer0_i_65536_2
 	clr	a
 	cjne	a,_Timer0_i_65536_2,00109$
 	inc	(_Timer0_i_65536_2 + 1)
 00109$:
-;	main.c:23: if(i==1000)
+;	main.c:29: if(i==1000)
 	mov	a,#0xe8
 	cjne	a,_Timer0_i_65536_2,00103$
 	mov	a,#0x03
 	cjne	a,(_Timer0_i_65536_2 + 1),00103$
-;	main.c:25: i=0;
+;	main.c:31: i=0;
 	clr	a
 	mov	_Timer0_i_65536_2,a
 	mov	(_Timer0_i_65536_2 + 1),a
-;	main.c:26: P2_0=!P2_0;
+;	main.c:32: P2_0=!P2_0;
 	cpl	_P2_0
 00103$:
-;	main.c:28: }
+;	main.c:34: }
 	pop	psw
 	pop	acc
 	reti
