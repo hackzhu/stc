@@ -73,14 +73,14 @@ C:   00000020  s__CODE
 C:   00000022  l_GSINIT3                       
 C:   0000002A  l_GSINIT4                       
 C:   00000038  s_GSINIT4                       
-C:   0000003D  l_CSEG                          
+C:   0000003E  l_CSEG                          
 C:   00000062  s_GSFINAL                       
 C:   00000062  s_GSINIT                        
 C:   00000062  s_GSINIT5                       
 C:   00000065  s_CSEG                          
 C:   00000080  l_DSEG                          
-C:   000000A2  s_CONST                         
-C:   000000A2  s_XINIT                         
+C:   000000A3  s_CONST                         
+C:   000000A3  s_XINIT                         
 C:   000000F8  l_SSEG                          
 C:   00000100  l_IRAM                          
 
@@ -330,13 +330,13 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                00000065    0000003D =          61. bytes (REL,CON,CODE)
+CSEG                                00000065    0000003E =          62. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-C:   00000065  _main                              main
-C:   0000006C  _int0                              main
-C:   0000009E  __sdcc_external_startup            _startup
+C:   00000065  _int0                              main
+C:   00000097  _main                              main
+C:   0000009F  __sdcc_external_startup            _startup
 ASxxxx Linker V03.00 + NoICE + sdld,  page 16.
 
 Files Linked                              [ module(s) ]

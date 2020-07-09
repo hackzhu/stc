@@ -334,8 +334,8 @@ Symbol Table
     __sdcc_gsinit_startup                                          ****** GX
   E __sdcc_program_startup                                         000006 GR
   6 __start__stack                                                 000000 GR
- 17 _int0                                                          000007 GR
- 17 _main                                                          000000 GR
+ 17 _int0                                                          000000 GR
+ 17 _main                                                          000032 GR
     a                                                           =  0000E0 L
     a.0                                                         =  0000E0 L
     a.1                                                         =  0000E1 L
@@ -564,7 +564,7 @@ Area Table
   14 GSINIT5                                    size      0   flags   20
   15 GSINIT                                     size      0   flags   20
   16 GSFINAL                                    size      3   flags   20
-  17 CSEG                                       size     39   flags   20
+  17 CSEG                                       size     3A   flags   20
   18 CONST                                      size      0   flags   20
   19 XINIT                                      size      0   flags   20
   1A CABS                                       size      0   flags   28

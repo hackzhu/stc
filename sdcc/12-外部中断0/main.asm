@@ -8,8 +8,8 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _int0
 	.globl _main
+	.globl _int0
 	.globl _TF2
 	.globl _EXF2
 	.globl _RCLK
@@ -351,13 +351,15 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
+;Allocation info for local variables in function 'int0'
 ;------------------------------------------------------------
-;	main.c:3: void main()
+;i                         Allocated to registers r6 r7 
+;------------------------------------------------------------
+;	main.c:3: void int0() __interrupt 0
 ;	-----------------------------------------
-;	 function main
+;	 function int0
 ;	-----------------------------------------
-_main:
+_int0:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -366,27 +368,6 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:5: EA=1;
-;	assignBit
-	setb	_EA
-;	main.c:6: EX0=1;
-;	assignBit
-	setb	_EX0
-;	main.c:7: IT0=1;
-;	assignBit
-	setb	_IT0
-;	main.c:9: }
-	ret
-;------------------------------------------------------------
-;Allocation info for local variables in function 'int0'
-;------------------------------------------------------------
-;i                         Allocated to registers r6 r7 
-;------------------------------------------------------------
-;	main.c:11: void int0() __interrupt 0
-;	-----------------------------------------
-;	 function int0
-;	-----------------------------------------
-_int0:
 	push	acc
 	push	ar7
 	push	ar6
@@ -394,7 +375,7 @@ _int0:
 	push	ar4
 	push	psw
 	mov	psw,#0x00
-;	main.c:14: while(i--);
+;	main.c:6: while(i--);
 	mov	r6,#0xe8
 	mov	r7,#0x03
 00101$:
@@ -407,11 +388,11 @@ _int0:
 	mov	a,r4
 	orl	a,r5
 	jnz	00101$
-;	main.c:15: if(P3_2==0) P2_1=!P2_1;
+;	main.c:7: if(P3_2==0) P2_1=!P2_1;
 	jb	_P3_2,00106$
 	cpl	_P2_1
 00106$:
-;	main.c:16: }
+;	main.c:8: }
 	pop	psw
 	pop	ar4
 	pop	ar5
@@ -422,6 +403,27 @@ _int0:
 ;	eliminated unneeded push/pop dpl
 ;	eliminated unneeded push/pop dph
 ;	eliminated unneeded push/pop b
+;------------------------------------------------------------
+;Allocation info for local variables in function 'main'
+;------------------------------------------------------------
+;	main.c:10: void main()
+;	-----------------------------------------
+;	 function main
+;	-----------------------------------------
+_main:
+;	main.c:12: EA=1;
+;	assignBit
+	setb	_EA
+;	main.c:13: EX0=1;
+;	assignBit
+	setb	_EX0
+;	main.c:14: IT0=1;
+;	assignBit
+	setb	_IT0
+;	main.c:15: while(1);
+00102$:
+;	main.c:16: }
+	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)

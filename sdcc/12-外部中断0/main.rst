@@ -8,8 +8,8 @@
                                       8 ;--------------------------------------------------------
                                       9 ; Public variables in this module
                                      10 ;--------------------------------------------------------
-                                     11 	.globl _int0
-                                     12 	.globl _main
+                                     11 	.globl _main
+                                     12 	.globl _int0
                                      13 	.globl _TF2
                                      14 	.globl _EXF2
                                      15 	.globl _RCLK
@@ -322,7 +322,7 @@
                                     322 	.area HOME    (CODE)
       000000                        323 __interrupt_vect:
       000000 02 00 09         [24]  324 	ljmp	__sdcc_gsinit_startup
-      000003 02 00 6C         [24]  325 	ljmp	_int0
+      000003 02 00 65         [24]  325 	ljmp	_int0
                                     326 ;--------------------------------------------------------
                                     327 ; global & static initialisations
                                     328 ;--------------------------------------------------------
@@ -344,85 +344,87 @@
                                     344 	.area HOME    (CODE)
                                     345 	.area HOME    (CODE)
       000006                        346 __sdcc_program_startup:
-      000006 02 00 65         [24]  347 	ljmp	_main
+      000006 02 00 97         [24]  347 	ljmp	_main
                                     348 ;	return from main will return to caller
                                     349 ;--------------------------------------------------------
                                     350 ; code
                                     351 ;--------------------------------------------------------
                                     352 	.area CSEG    (CODE)
                                     353 ;------------------------------------------------------------
-                                    354 ;Allocation info for local variables in function 'main'
+                                    354 ;Allocation info for local variables in function 'int0'
                                     355 ;------------------------------------------------------------
-                                    356 ;	main.c:3: void main()
-                                    357 ;	-----------------------------------------
-                                    358 ;	 function main
+                                    356 ;i                         Allocated to registers r6 r7 
+                                    357 ;------------------------------------------------------------
+                                    358 ;	main.c:3: void int0() __interrupt 0
                                     359 ;	-----------------------------------------
-      000065                        360 _main:
-                           000007   361 	ar7 = 0x07
-                           000006   362 	ar6 = 0x06
-                           000005   363 	ar5 = 0x05
-                           000004   364 	ar4 = 0x04
-                           000003   365 	ar3 = 0x03
-                           000002   366 	ar2 = 0x02
-                           000001   367 	ar1 = 0x01
-                           000000   368 	ar0 = 0x00
-                                    369 ;	main.c:5: EA=1;
-                                    370 ;	assignBit
-      000065 D2 AF            [12]  371 	setb	_EA
-                                    372 ;	main.c:6: EX0=1;
-                                    373 ;	assignBit
-      000067 D2 A8            [12]  374 	setb	_EX0
-                                    375 ;	main.c:7: IT0=1;
-                                    376 ;	assignBit
-      000069 D2 88            [12]  377 	setb	_IT0
-                                    378 ;	main.c:9: }
-      00006B 22               [24]  379 	ret
-                                    380 ;------------------------------------------------------------
-                                    381 ;Allocation info for local variables in function 'int0'
-                                    382 ;------------------------------------------------------------
-                                    383 ;i                         Allocated to registers r6 r7 
-                                    384 ;------------------------------------------------------------
-                                    385 ;	main.c:11: void int0() __interrupt 0
-                                    386 ;	-----------------------------------------
-                                    387 ;	 function int0
-                                    388 ;	-----------------------------------------
-      00006C                        389 _int0:
-      00006C C0 E0            [24]  390 	push	acc
-      00006E C0 07            [24]  391 	push	ar7
-      000070 C0 06            [24]  392 	push	ar6
-      000072 C0 05            [24]  393 	push	ar5
-      000074 C0 04            [24]  394 	push	ar4
-      000076 C0 D0            [24]  395 	push	psw
-      000078 75 D0 00         [24]  396 	mov	psw,#0x00
-                                    397 ;	main.c:14: while(i--);
-      00007B 7E E8            [12]  398 	mov	r6,#0xe8
-      00007D 7F 03            [12]  399 	mov	r7,#0x03
-      00007F                        400 00101$:
-      00007F 8E 04            [24]  401 	mov	ar4,r6
-      000081 8F 05            [24]  402 	mov	ar5,r7
-      000083 1E               [12]  403 	dec	r6
-      000084 BE FF 01         [24]  404 	cjne	r6,#0xff,00121$
-      000087 1F               [12]  405 	dec	r7
-      000088                        406 00121$:
-      000088 EC               [12]  407 	mov	a,r4
-      000089 4D               [12]  408 	orl	a,r5
-      00008A 70 F3            [24]  409 	jnz	00101$
-                                    410 ;	main.c:15: if(P3_2==0) P2_1=!P2_1;
-      00008C 20 B2 02         [24]  411 	jb	_P3_2,00106$
-      00008F B2 A1            [12]  412 	cpl	_P2_1
-      000091                        413 00106$:
-                                    414 ;	main.c:16: }
-      000091 D0 D0            [24]  415 	pop	psw
-      000093 D0 04            [24]  416 	pop	ar4
-      000095 D0 05            [24]  417 	pop	ar5
-      000097 D0 06            [24]  418 	pop	ar6
-      000099 D0 07            [24]  419 	pop	ar7
-      00009B D0 E0            [24]  420 	pop	acc
-      00009D 32               [24]  421 	reti
-                                    422 ;	eliminated unneeded push/pop dpl
-                                    423 ;	eliminated unneeded push/pop dph
-                                    424 ;	eliminated unneeded push/pop b
-                                    425 	.area CSEG    (CODE)
-                                    426 	.area CONST   (CODE)
-                                    427 	.area XINIT   (CODE)
-                                    428 	.area CABS    (ABS,CODE)
+                                    360 ;	 function int0
+                                    361 ;	-----------------------------------------
+      000065                        362 _int0:
+                           000007   363 	ar7 = 0x07
+                           000006   364 	ar6 = 0x06
+                           000005   365 	ar5 = 0x05
+                           000004   366 	ar4 = 0x04
+                           000003   367 	ar3 = 0x03
+                           000002   368 	ar2 = 0x02
+                           000001   369 	ar1 = 0x01
+                           000000   370 	ar0 = 0x00
+      000065 C0 E0            [24]  371 	push	acc
+      000067 C0 07            [24]  372 	push	ar7
+      000069 C0 06            [24]  373 	push	ar6
+      00006B C0 05            [24]  374 	push	ar5
+      00006D C0 04            [24]  375 	push	ar4
+      00006F C0 D0            [24]  376 	push	psw
+      000071 75 D0 00         [24]  377 	mov	psw,#0x00
+                                    378 ;	main.c:6: while(i--);
+      000074 7E E8            [12]  379 	mov	r6,#0xe8
+      000076 7F 03            [12]  380 	mov	r7,#0x03
+      000078                        381 00101$:
+      000078 8E 04            [24]  382 	mov	ar4,r6
+      00007A 8F 05            [24]  383 	mov	ar5,r7
+      00007C 1E               [12]  384 	dec	r6
+      00007D BE FF 01         [24]  385 	cjne	r6,#0xff,00121$
+      000080 1F               [12]  386 	dec	r7
+      000081                        387 00121$:
+      000081 EC               [12]  388 	mov	a,r4
+      000082 4D               [12]  389 	orl	a,r5
+      000083 70 F3            [24]  390 	jnz	00101$
+                                    391 ;	main.c:7: if(P3_2==0) P2_1=!P2_1;
+      000085 20 B2 02         [24]  392 	jb	_P3_2,00106$
+      000088 B2 A1            [12]  393 	cpl	_P2_1
+      00008A                        394 00106$:
+                                    395 ;	main.c:8: }
+      00008A D0 D0            [24]  396 	pop	psw
+      00008C D0 04            [24]  397 	pop	ar4
+      00008E D0 05            [24]  398 	pop	ar5
+      000090 D0 06            [24]  399 	pop	ar6
+      000092 D0 07            [24]  400 	pop	ar7
+      000094 D0 E0            [24]  401 	pop	acc
+      000096 32               [24]  402 	reti
+                                    403 ;	eliminated unneeded push/pop dpl
+                                    404 ;	eliminated unneeded push/pop dph
+                                    405 ;	eliminated unneeded push/pop b
+                                    406 ;------------------------------------------------------------
+                                    407 ;Allocation info for local variables in function 'main'
+                                    408 ;------------------------------------------------------------
+                                    409 ;	main.c:10: void main()
+                                    410 ;	-----------------------------------------
+                                    411 ;	 function main
+                                    412 ;	-----------------------------------------
+      000097                        413 _main:
+                                    414 ;	main.c:12: EA=1;
+                                    415 ;	assignBit
+      000097 D2 AF            [12]  416 	setb	_EA
+                                    417 ;	main.c:13: EX0=1;
+                                    418 ;	assignBit
+      000099 D2 A8            [12]  419 	setb	_EX0
+                                    420 ;	main.c:14: IT0=1;
+                                    421 ;	assignBit
+      00009B D2 88            [12]  422 	setb	_IT0
+                                    423 ;	main.c:15: while(1);
+      00009D                        424 00102$:
+                                    425 ;	main.c:16: }
+      00009D 80 FE            [24]  426 	sjmp	00102$
+                                    427 	.area CSEG    (CODE)
+                                    428 	.area CONST   (CODE)
+                                    429 	.area XINIT   (CODE)
+                                    430 	.area CABS    (ABS,CODE)
