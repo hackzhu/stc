@@ -391,20 +391,20 @@ _delay:
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	main.c:12: while(1)
+;	main.c:11: while(1)
 00109$:
-;	main.c:14: if(P3_0==0)
+;	main.c:13: if(P3_0==0)
 	jb	_P3_0,00109$
-;	main.c:16: delay(1000);
+;	main.c:15: delay(1000);
 	mov	dptr,#0x03e8
 	lcall	_delay
-;	main.c:17: if(P3_0==0) P2_0=!P2_0;
+;	main.c:16: if(P3_0==0) P2_0=!P2_0;
 	jb	_P3_0,00103$
 	cpl	_P2_0
-;	main.c:18: while(!P3_0);
+;	main.c:17: while(!P3_0);
 00103$:
 	jnb	_P3_0,00103$
-;	main.c:21: }
+;	main.c:20: }
 	sjmp	00109$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
