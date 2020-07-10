@@ -270,6 +270,8 @@ _TF2	=	0x00cf
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
 	.area	OSEG    (OVR,DATA)
+_main_k_65536_1:
+	.ds 2
 ;--------------------------------------------------------
 ; Stack segment in internal ram 
 ;--------------------------------------------------------
@@ -353,6 +355,7 @@ __sdcc_program_startup:
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
 ;i                         Allocated to registers r6 r7 
+;k                         Allocated with name '_main_k_65536_1'
 ;------------------------------------------------------------
 ;	main.c:3: void main()
 ;	-----------------------------------------
@@ -368,15 +371,15 @@ _main:
 	ar1 = 0x01
 	ar0 = 0x00
 ;	main.c:6: while(1)
-00113$:
-;	main.c:8: P1=0x0f;
+00122$:
+;	main.c:11: P1=0x0f;		//00001111
 	mov	_P1,#0x0f
-;	main.c:9: if(P1!=0x0f);
+;	main.c:12: if(P1!=0x0f);
 	mov	a,_P1
-;	main.c:11: for(i=0;i<1000;i++);
+;	main.c:14: for(i=0;i<1000;i++);
 	mov	r6,#0xe8
 	mov	r7,#0x03
-00117$:
+00126$:
 	mov	a,r6
 	add	a,#0xff
 	mov	r4,a
@@ -387,80 +390,172 @@ _main:
 	mov	ar7,r5
 	mov	a,r4
 	orl	a,r5
-	jnz	00117$
-;	main.c:12: if(P1!=0x0f);
+	jnz	00126$
+;	main.c:15: if(P1!=0x0f);		//00001111 检测列
 	mov	a,_P1
-;	main.c:14: switch(P1)
+;	main.c:17: switch(P1)
 	mov	r7,_P1
-	cjne	r7,#0x07,00165$
+	cjne	r7,#0x07,00178$
 	sjmp	00102$
-00165$:
-	cjne	r7,#0x0b,00166$
+00178$:
+	cjne	r7,#0x0b,00179$
 	sjmp	00103$
-00166$:
-	cjne	r7,#0x0d,00167$
+00179$:
+	cjne	r7,#0x0d,00180$
 	sjmp	00104$
-00167$:
-;	main.c:16: case(0x07):P2_0=0;break;
+00180$:
+;	main.c:19: case(0x07):k=0;break;	//00000111
 	cjne	r7,#0x0e,00106$
 	sjmp	00105$
 00102$:
-;	assignBit
-	clr	_P2_0
-;	main.c:17: case(0x0B):P2_1=0;break;
+	clr	a
+	mov	_main_k_65536_1,a
+	mov	(_main_k_65536_1 + 1),a
+;	main.c:20: case(0x0B):k=1;break;	//00001011
 	sjmp	00106$
 00103$:
-;	assignBit
-	clr	_P2_1
-;	main.c:18: case(0x0D):P2_2=0;break;
+	mov	_main_k_65536_1,#0x01
+	mov	(_main_k_65536_1 + 1),#0x00
+;	main.c:21: case(0x0D):k=2;break;	//00001101
 	sjmp	00106$
 00104$:
-;	assignBit
-	clr	_P2_2
-;	main.c:19: case(0x0E):P2_3=0;break;
+	mov	_main_k_65536_1,#0x02
+	mov	(_main_k_65536_1 + 1),#0x00
+;	main.c:22: case(0x0E):k=3;break;	//00001110
 	sjmp	00106$
 00105$:
-;	assignBit
-	clr	_P2_3
-;	main.c:21: }
+	mov	_main_k_65536_1,#0x03
+	mov	(_main_k_65536_1 + 1),#0x00
+;	main.c:24: }
 00106$:
-;	main.c:22: P1=0xf0;
+;	main.c:25: P1=0xf0;		//11110000 检测行
 	mov	_P1,#0xf0
-;	main.c:23: switch(P1)
+;	main.c:26: switch(P1)
 	mov	r7,_P1
-	cjne	r7,#0x70,00169$
-	sjmp	00107$
-00169$:
-	cjne	r7,#0xb0,00170$
+	cjne	r7,#0x70,00182$
+	sjmp	00111$
+00182$:
+	cjne	r7,#0xb0,00183$
 	sjmp	00108$
-00170$:
-	cjne	r7,#0xd0,00171$
+00183$:
+	cjne	r7,#0xd0,00184$
 	sjmp	00109$
-00171$:
-;	main.c:25: case(0x70):P2_4=0;break;
-	cjne	r7,#0xe0,00113$
+00184$:
+;	main.c:29: case(0xB0):k+=10;break;	//10110000
+	cjne	r7,#0xe0,00111$
 	sjmp	00110$
-00107$:
-;	assignBit
-	clr	_P2_4
-;	main.c:26: case(0xB0):P2_5=0;break;
-	sjmp	00113$
 00108$:
-;	assignBit
-	clr	_P2_5
-;	main.c:27: case(0xD0):P2_6=0;break;
-	sjmp	00113$
+	mov	a,#0x0a
+	add	a,_main_k_65536_1
+	mov	_main_k_65536_1,a
+	clr	a
+	addc	a,(_main_k_65536_1 + 1)
+	mov	(_main_k_65536_1 + 1),a
+;	main.c:30: case(0xD0):k+=20;break;	//11010000
+	sjmp	00111$
 00109$:
-;	assignBit
-	clr	_P2_6
-;	main.c:28: case(0xE0):P2_7=0;break;
-	sjmp	00113$
+	mov	a,#0x14
+	add	a,_main_k_65536_1
+	mov	_main_k_65536_1,a
+	clr	a
+	addc	a,(_main_k_65536_1 + 1)
+	mov	(_main_k_65536_1 + 1),a
+;	main.c:31: case(0xE0):k+=30;break;	//11100000
+	sjmp	00111$
 00110$:
-;	assignBit
-	clr	_P2_7
-;	main.c:29: }
-;	main.c:33: }
-	sjmp	00113$
+	mov	a,#0x1e
+	add	a,_main_k_65536_1
+	mov	_main_k_65536_1,a
+	clr	a
+	addc	a,(_main_k_65536_1 + 1)
+	mov	(_main_k_65536_1 + 1),a
+;	main.c:32: }
+00111$:
+;	main.c:35: P2=0xff;
+	mov	_P2,#0xff
+;	main.c:36: switch(k)
+	clr	c
+	mov	a,#0x0d
+	subb	a,_main_k_65536_1
+	clr	a
+	subb	a,(_main_k_65536_1 + 1)
+	jnc	00186$
+	ljmp	00122$
+00186$:
+	mov	a,_main_k_65536_1
+	add	a,#(00187$-3-.)
+	movc	a,@a+pc
+	mov	dpl,a
+	mov	a,_main_k_65536_1
+	add	a,#(00188$-3-.)
+	movc	a,@a+pc
+	mov	dph,a
+	clr	a
+	jmp	@a+dptr
+00187$:
+	.db	00112$
+	.db	00113$
+	.db	00114$
+	.db	00115$
+	.db	00122$
+	.db	00122$
+	.db	00122$
+	.db	00122$
+	.db	00122$
+	.db	00122$
+	.db	00116$
+	.db	00117$
+	.db	00118$
+	.db	00119$
+00188$:
+	.db	00112$>>8
+	.db	00113$>>8
+	.db	00114$>>8
+	.db	00115$>>8
+	.db	00122$>>8
+	.db	00122$>>8
+	.db	00122$>>8
+	.db	00122$>>8
+	.db	00122$>>8
+	.db	00122$>>8
+	.db	00116$>>8
+	.db	00117$>>8
+	.db	00118$>>8
+	.db	00119$>>8
+;	main.c:38: case(0):P2_0=!P2_0;break;
+00112$:
+	cpl	_P2_0
+	ljmp	00122$
+;	main.c:39: case(1):P2_1=!P2_1;break;
+00113$:
+	cpl	_P2_1
+	ljmp	00122$
+;	main.c:40: case(2):P2_2=!P2_2;break;
+00114$:
+	cpl	_P2_2
+	ljmp	00122$
+;	main.c:41: case(3):P2_3=!P2_3;break;
+00115$:
+	cpl	_P2_3
+	ljmp	00122$
+;	main.c:42: case(10):P2_4=!P2_4;break;
+00116$:
+	cpl	_P2_4
+	ljmp	00122$
+;	main.c:43: case(11):P2_5=!P2_5;break;
+00117$:
+	cpl	_P2_5
+	ljmp	00122$
+;	main.c:44: case(12):P2_6=!P2_6;break;
+00118$:
+	cpl	_P2_6
+	ljmp	00122$
+;	main.c:45: case(13):P2_7=!P2_7;break;
+00119$:
+	cpl	_P2_7
+;	main.c:54: }
+;	main.c:56: }
+	ljmp	00122$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)
