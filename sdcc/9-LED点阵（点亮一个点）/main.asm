@@ -398,7 +398,7 @@ _main:
 ;	main.c:18: P3_6=0;
 ;	assignBit
 	clr	_P3_6
-;	main.c:19: _nop_();
+;	main.c:19: _nop_();	//执行一条空指令
 	NOP	
 ;	main.c:20: _nop_();
 	NOP	
