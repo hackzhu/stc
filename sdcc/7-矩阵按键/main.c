@@ -2,7 +2,8 @@
 
 void main()
 {
-	unsigned int i,k;
+	unsigned int i;
+	unsigned char k=0;
 	while(1)
 	{
 
