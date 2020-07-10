@@ -8,6 +8,7 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
+	.globl _main_smgduan_65536_1
 	.globl _main
 	.globl _TF2
 	.globl _EXF2
@@ -269,6 +270,7 @@ _TF2	=	0x00cf
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
+	.area	OSEG    (OVR,DATA)
 ;--------------------------------------------------------
 ; Stack segment in internal ram 
 ;--------------------------------------------------------
@@ -351,6 +353,9 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
+;i                         Allocated to registers r7 
+;k                         Allocated to registers r6 
+;------------------------------------------------------------
 ;	main.c:3: void main()
 ;	-----------------------------------------
 ;	 function main
@@ -364,20 +369,160 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:5: while(1)
-00102$:
-;	main.c:7: P2_2=1;
+;	main.c:9: for(i=0;i<8;i++)
+00125$:
+	mov	r7,#0x00
+00118$:
+;	main.c:11: switch(i)	 //位选，选择点亮的数码管，
+	mov	a,r7
+	add	a,#0xff - 0x07
+	jnc	00147$
+	ljmp	00109$
+00147$:
+	mov	a,r7
+	add	a,#(00148$-3-.)
+	movc	a,@a+pc
+	mov	dpl,a
+	mov	a,r7
+	add	a,#(00149$-3-.)
+	movc	a,@a+pc
+	mov	dph,a
+	clr	a
+	jmp	@a+dptr
+00148$:
+	.db	00101$
+	.db	00102$
+	.db	00103$
+	.db	00104$
+	.db	00105$
+	.db	00106$
+	.db	00107$
+	.db	00108$
+00149$:
+	.db	00101$>>8
+	.db	00102$>>8
+	.db	00103$>>8
+	.db	00104$>>8
+	.db	00105$>>8
+	.db	00106$>>8
+	.db	00107$>>8
+	.db	00108$>>8
+;	main.c:13: case(0):P2_2=1;P2_3=1;P2_4=1; break;//显示第0位 111
+00101$:
 ;	assignBit
 	setb	_P2_2
-;	main.c:8: P2_3=0;
+;	assignBit
+	setb	_P2_3
+;	assignBit
+	setb	_P2_4
+;	main.c:14: case(1):P2_2=0;P2_3=1;P2_4=1; break;//显示第1位 011
+	sjmp	00109$
+00102$:
+;	assignBit
+	clr	_P2_2
+;	assignBit
+	setb	_P2_3
+;	assignBit
+	setb	_P2_4
+;	main.c:15: case(2):P2_2=1;P2_3=0;P2_4=1; break;//显示第2位	101
+	sjmp	00109$
+00103$:
+;	assignBit
+	setb	_P2_2
 ;	assignBit
 	clr	_P2_3
-;	main.c:9: P2_4=0;	
+;	assignBit
+	setb	_P2_4
+;	main.c:16: case(3):P2_2=0;P2_3=0;P2_4=1; break;//显示第3位	001
+	sjmp	00109$
+00104$:
+;	assignBit
+	clr	_P2_2
+;	assignBit
+	clr	_P2_3
+;	assignBit
+	setb	_P2_4
+;	main.c:17: case(4):P2_2=1;P2_3=1;P2_4=0; break;//显示第4位	110
+	sjmp	00109$
+00105$:
+;	assignBit
+	setb	_P2_2
+;	assignBit
+	setb	_P2_3
 ;	assignBit
 	clr	_P2_4
-;	main.c:12: }
-	sjmp	00102$
+;	main.c:18: case(5):P2_2=0;P2_3=1;P2_4=0; break;//显示第5位	010
+	sjmp	00109$
+00106$:
+;	assignBit
+	clr	_P2_2
+;	assignBit
+	setb	_P2_3
+;	assignBit
+	clr	_P2_4
+;	main.c:19: case(6):P2_2=1;P2_3=0;P2_4=0; break;//显示第6位	100
+	sjmp	00109$
+00107$:
+;	assignBit
+	setb	_P2_2
+;	assignBit
+	clr	_P2_3
+;	assignBit
+	clr	_P2_4
+;	main.c:20: case(7):P2_2=0;P2_3=0;P2_4=0; break;//显示第7位	000
+	sjmp	00109$
+00108$:
+;	assignBit
+	clr	_P2_2
+;	assignBit
+	clr	_P2_3
+;	assignBit
+	clr	_P2_4
+;	main.c:21: }
+00109$:
+;	main.c:22: P0=smgduan[i];//发送段码
+	mov	a,r7
+	mov	dptr,#_main_smgduan_65536_1
+	movc	a,@a+dptr
+	mov	_P0,a
+;	main.c:23: for(k=0;k<100;k++); //间隔一段时间扫描	
+	mov	r6,#0x64
+00117$:
+	mov	a,r6
+	dec	a
+	mov	r5,a
+	mov	r6,a
+;	main.c:24: P0=0x00;//消隐
+	jnz	00117$
+	mov	_P0,a
+;	main.c:9: for(i=0;i<8;i++)
+	inc	r7
+	cjne	r7,#0x08,00151$
+00151$:
+	jnc	00152$
+	ljmp	00118$
+00152$:
+;	main.c:27: }
+	ljmp	00125$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
+_main_smgduan_65536_1:
+	.db #0x3f	; 63
+	.db #0x06	; 6
+	.db #0x5b	; 91
+	.db #0x4f	; 79	'O'
+	.db #0x66	; 102	'f'
+	.db #0x6d	; 109	'm'
+	.db #0x7d	; 125
+	.db #0x07	; 7
+	.db #0x7f	; 127
+	.db #0x6f	; 111	'o'
+	.db #0x77	; 119	'w'
+	.db #0x7c	; 124
+	.db #0x39	; 57	'9'
+	.db #0x5e	; 94
+	.db #0x79	; 121	'y'
+	.db #0x71	; 113	'q'
+	.db 0x00
 	.area XINIT   (CODE)
 	.area CABS    (ABS,CODE)
