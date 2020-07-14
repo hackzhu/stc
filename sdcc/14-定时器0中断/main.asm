@@ -8,8 +8,9 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _Timer0
 	.globl _main
+	.globl _Timer0
+	.globl _Timer0Init
 	.globl _TF2
 	.globl _EXF2
 	.globl _RCLK
@@ -355,13 +356,13 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
+;Allocation info for local variables in function 'Timer0Init'
 ;------------------------------------------------------------
-;	main.c:3: void main()
+;	main.c:3: void Timer0Init()
 ;	-----------------------------------------
-;	 function main
+;	 function Timer0Init
 ;	-----------------------------------------
-_main:
+_Timer0Init:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -385,45 +386,43 @@ _main:
 	mov	_TH0,#0xfc
 ;	main.c:18: TL0=0x18;	//0001 1000
 	mov	_TL0,#0x18
-;	main.c:19: while(1);
-00102$:
-;	main.c:20: }
-	sjmp	00102$
+;	main.c:19: }
+	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'Timer0'
 ;------------------------------------------------------------
 ;i                         Allocated with name '_Timer0_i_65536_2'
 ;------------------------------------------------------------
-;	main.c:23: void Timer0() __interrupt 1		//定时器函数
+;	main.c:22: void Timer0() __interrupt 1		//定时器函数
 ;	-----------------------------------------
 ;	 function Timer0
 ;	-----------------------------------------
 _Timer0:
 	push	acc
 	push	psw
-;	main.c:26: TH0=0xfc;	//1111 1100
+;	main.c:25: TH0=0xfc;	//1111 1100
 	mov	_TH0,#0xfc
-;	main.c:27: TL0=0x18;	//0001 1000
+;	main.c:26: TL0=0x18;	//0001 1000
 	mov	_TL0,#0x18
-;	main.c:28: i++;
+;	main.c:27: i++;
 	inc	_Timer0_i_65536_2
 	clr	a
 	cjne	a,_Timer0_i_65536_2,00109$
 	inc	(_Timer0_i_65536_2 + 1)
 00109$:
-;	main.c:29: if(i==1000)
+;	main.c:28: if(i==1000)
 	mov	a,#0xe8
 	cjne	a,_Timer0_i_65536_2,00103$
 	mov	a,#0x03
 	cjne	a,(_Timer0_i_65536_2 + 1),00103$
-;	main.c:31: i=0;
+;	main.c:30: i=0;
 	clr	a
 	mov	_Timer0_i_65536_2,a
 	mov	(_Timer0_i_65536_2 + 1),a
-;	main.c:32: P2_0=!P2_0;
+;	main.c:31: P2_0=!P2_0;
 	cpl	_P2_0
 00103$:
-;	main.c:34: }
+;	main.c:33: }
 	pop	psw
 	pop	acc
 	reti
@@ -431,6 +430,20 @@ _Timer0:
 ;	eliminated unneeded push/pop dpl
 ;	eliminated unneeded push/pop dph
 ;	eliminated unneeded push/pop b
+;------------------------------------------------------------
+;Allocation info for local variables in function 'main'
+;------------------------------------------------------------
+;	main.c:36: void main()
+;	-----------------------------------------
+;	 function main
+;	-----------------------------------------
+_main:
+;	main.c:38: Timer0Init();
+	lcall	_Timer0Init
+;	main.c:39: while(1);
+00102$:
+;	main.c:40: }
+	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)

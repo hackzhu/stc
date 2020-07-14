@@ -1,6 +1,6 @@
 #include <8052.h>
 
-void main()
+void Timer0Init()
 {
 	EA=1;		//打开中断总开关
 
@@ -16,7 +16,6 @@ void main()
 //给定时器赋初值
 	TH0=0xfc;	//1111 1100
 	TL0=0x18;	//0001 1000
-	while(1);
 }
 
 
@@ -31,4 +30,11 @@ void Timer0() __interrupt 1		//定时器函数
 	i=0;
 	P2_0=!P2_0;
 	}
+}
+
+
+void main()
+{
+	Timer0Init();
+	while(1);
 }
