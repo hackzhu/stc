@@ -352,9 +352,9 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;a                         Allocated to registers r5 
+;a                         Allocated to registers r6 
 ;dat1                      Allocated to registers r7 
-;dat2                      Allocated to registers r6 
+;dat2                      Allocated to registers 
 ;------------------------------------------------------------
 ;	main.c:6: void main()
 ;	-----------------------------------------
@@ -369,89 +369,64 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:8: while(1)
-00104$:
-;	main.c:10: unsigned char a,dat1=0xfe,dat2=0x01;	//unsinged char 0-255
+;	main.c:8: P0_7=0;		//第一列
+;	assignBit
+	clr	_P0_7
+;	main.c:9: P0_1=0;		//第六列
+;	assignBit
+	clr	_P0_1
+;	main.c:10: while(1)
+00103$:
+;	main.c:12: unsigned char a,dat1=0xfe,dat2=0x01;	//unsinged char 0-255
 	mov	r7,#0xfe
-	mov	r6,#0x01
-;	main.c:11: P3_6=1;		//SPCLK
+;	main.c:13: P3_6=0;		//SPCLK 移位寄存器时钟输入 
 ;	assignBit
-	setb	_P3_6
-;	main.c:12: P3_5=1;		//RCLK
+	clr	_P3_6
+;	main.c:14: P3_5=0;		//RCLK 	存储寄存器时钟输入 
 ;	assignBit
-	setb	_P3_5
-;	main.c:14: for(a=0;a<8;a++)
-	mov	r5,#0x00
-00106$:
-;	main.c:16: P3_4= dat1 >> 7;		//SER
+	clr	_P3_5
+;	main.c:16: for(a=0;a<8;a++)
+	mov	r6,#0x00
+00105$:
+;	main.c:18: P3_4= dat1 >> 7;		//SER 串行数据输入
 	mov	a,r7
 	rl	a
 	anl	a,#0x01
 ;	assignBit
 	add	a,#0xff
 	mov	_P3_4,c
-;	main.c:17: dat1 <<= 1;
-	mov	ar4,r7
-	mov	a,r4
-	add	a,r4
-	mov	r7,a
-;	main.c:18: P3_6=0;
-;	assignBit
-	clr	_P3_6
-;	main.c:19: _nop_();	//执行一条空指令
-	NOP	
-;	main.c:20: _nop_();
-	NOP	
-;	main.c:21: P3_6=1;	
-;	assignBit
-	setb	_P3_6
-;	main.c:14: for(a=0;a<8;a++)
-	inc	r5
-	cjne	r5,#0x08,00134$
-00134$:
-	jc	00106$
-;	main.c:24: for(a=0;a<8;a++)
-	mov	r7,#0x00
-00108$:
-;	main.c:26: P3_4= dat2 >> 7;		//SER
-	mov	a,r6
-	rl	a
-	anl	a,#0x01
-;	assignBit
-	add	a,#0xff
-	mov	_P3_4,c
-;	main.c:27: dat2 <<= 1;
-	mov	ar5,r6
+;	main.c:19: dat1 <<= 1;
+	mov	ar5,r7
 	mov	a,r5
 	add	a,r5
-	mov	r6,a
-;	main.c:28: P3_6=0;
+	mov	r7,a
+;	main.c:20: P3_6=1;
+;	assignBit
+	setb	_P3_6
+;	main.c:21: _nop_();	//执行一条空指令
+	NOP	
+;	main.c:22: _nop_();
+	NOP	
+;	main.c:23: P3_6=0;	
 ;	assignBit
 	clr	_P3_6
-;	main.c:29: _nop_();
-	NOP	
-;	main.c:30: _nop_();
-	NOP	
-;	main.c:31: P3_6=1;	
-;	assignBit
-	setb	_P3_6
-;	main.c:24: for(a=0;a<8;a++)
-	inc	r7
-	cjne	r7,#0x08,00136$
-00136$:
-	jc	00108$
-;	main.c:33: P3_5=0;
+;	main.c:16: for(a=0;a<8;a++)
+	inc	r6
+	cjne	r6,#0x08,00122$
+00122$:
+	jc	00105$
+;	main.c:35: P3_5=0;
 ;	assignBit
 	clr	_P3_5
-;	main.c:34: _nop_();
+;	main.c:36: _nop_();
 	NOP	
-;	main.c:35: _nop_();
+;	main.c:37: _nop_();
 	NOP	
-;	main.c:36: P3_6=1;
+;	main.c:38: P3_5=1;
 ;	assignBit
-	setb	_P3_6
-;	main.c:38: }
-	sjmp	00104$
+	setb	_P3_5
+;	main.c:40: }
+	sjmp	00103$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)

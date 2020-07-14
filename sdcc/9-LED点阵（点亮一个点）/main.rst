@@ -352,9 +352,9 @@
                                     352 ;------------------------------------------------------------
                                     353 ;Allocation info for local variables in function 'main'
                                     354 ;------------------------------------------------------------
-                                    355 ;a                         Allocated to registers r5 
+                                    355 ;a                         Allocated to registers r6 
                                     356 ;dat1                      Allocated to registers r7 
-                                    357 ;dat2                      Allocated to registers r6 
+                                    357 ;dat2                      Allocated to registers 
                                     358 ;------------------------------------------------------------
                                     359 ;	main.c:6: void main()
                                     360 ;	-----------------------------------------
@@ -369,90 +369,65 @@
                            000002   369 	ar2 = 0x02
                            000001   370 	ar1 = 0x01
                            000000   371 	ar0 = 0x00
-                                    372 ;	main.c:8: while(1)
-      000062                        373 00104$:
-                                    374 ;	main.c:10: unsigned char a,dat1=0xfe,dat2=0x01;	//unsinged char 0-255
-      000062 7F FE            [12]  375 	mov	r7,#0xfe
-      000064 7E 01            [12]  376 	mov	r6,#0x01
-                                    377 ;	main.c:11: P3_6=1;		//SPCLK
-                                    378 ;	assignBit
-      000066 D2 B6            [12]  379 	setb	_P3_6
-                                    380 ;	main.c:12: P3_5=1;		//RCLK
-                                    381 ;	assignBit
-      000068 D2 B5            [12]  382 	setb	_P3_5
-                                    383 ;	main.c:14: for(a=0;a<8;a++)
-      00006A 7D 00            [12]  384 	mov	r5,#0x00
-      00006C                        385 00106$:
-                                    386 ;	main.c:16: P3_4= dat1 >> 7;		//SER
-      00006C EF               [12]  387 	mov	a,r7
-      00006D 23               [12]  388 	rl	a
-      00006E 54 01            [12]  389 	anl	a,#0x01
-                                    390 ;	assignBit
-      000070 24 FF            [12]  391 	add	a,#0xff
-      000072 92 B4            [24]  392 	mov	_P3_4,c
-                                    393 ;	main.c:17: dat1 <<= 1;
-      000074 8F 04            [24]  394 	mov	ar4,r7
-      000076 EC               [12]  395 	mov	a,r4
-      000077 2C               [12]  396 	add	a,r4
-      000078 FF               [12]  397 	mov	r7,a
-                                    398 ;	main.c:18: P3_6=0;
-                                    399 ;	assignBit
-      000079 C2 B6            [12]  400 	clr	_P3_6
-                                    401 ;	main.c:19: _nop_();	//执行一条空指令
-      00007B 00               [12]  402 	NOP	
-                                    403 ;	main.c:20: _nop_();
-      00007C 00               [12]  404 	NOP	
-                                    405 ;	main.c:21: P3_6=1;	
-                                    406 ;	assignBit
-      00007D D2 B6            [12]  407 	setb	_P3_6
-                                    408 ;	main.c:14: for(a=0;a<8;a++)
-      00007F 0D               [12]  409 	inc	r5
-      000080 BD 08 00         [24]  410 	cjne	r5,#0x08,00134$
-      000083                        411 00134$:
-      000083 40 E7            [24]  412 	jc	00106$
-                                    413 ;	main.c:24: for(a=0;a<8;a++)
-      000085 7F 00            [12]  414 	mov	r7,#0x00
-      000087                        415 00108$:
-                                    416 ;	main.c:26: P3_4= dat2 >> 7;		//SER
-      000087 EE               [12]  417 	mov	a,r6
-      000088 23               [12]  418 	rl	a
-      000089 54 01            [12]  419 	anl	a,#0x01
-                                    420 ;	assignBit
-      00008B 24 FF            [12]  421 	add	a,#0xff
-      00008D 92 B4            [24]  422 	mov	_P3_4,c
-                                    423 ;	main.c:27: dat2 <<= 1;
-      00008F 8E 05            [24]  424 	mov	ar5,r6
-      000091 ED               [12]  425 	mov	a,r5
-      000092 2D               [12]  426 	add	a,r5
-      000093 FE               [12]  427 	mov	r6,a
-                                    428 ;	main.c:28: P3_6=0;
-                                    429 ;	assignBit
-      000094 C2 B6            [12]  430 	clr	_P3_6
-                                    431 ;	main.c:29: _nop_();
-      000096 00               [12]  432 	NOP	
-                                    433 ;	main.c:30: _nop_();
-      000097 00               [12]  434 	NOP	
-                                    435 ;	main.c:31: P3_6=1;	
-                                    436 ;	assignBit
-      000098 D2 B6            [12]  437 	setb	_P3_6
-                                    438 ;	main.c:24: for(a=0;a<8;a++)
-      00009A 0F               [12]  439 	inc	r7
-      00009B BF 08 00         [24]  440 	cjne	r7,#0x08,00136$
-      00009E                        441 00136$:
-      00009E 40 E7            [24]  442 	jc	00108$
-                                    443 ;	main.c:33: P3_5=0;
-                                    444 ;	assignBit
-      0000A0 C2 B5            [12]  445 	clr	_P3_5
-                                    446 ;	main.c:34: _nop_();
-      0000A2 00               [12]  447 	NOP	
-                                    448 ;	main.c:35: _nop_();
-      0000A3 00               [12]  449 	NOP	
-                                    450 ;	main.c:36: P3_6=1;
-                                    451 ;	assignBit
-      0000A4 D2 B6            [12]  452 	setb	_P3_6
-                                    453 ;	main.c:38: }
-      0000A6 80 BA            [24]  454 	sjmp	00104$
-                                    455 	.area CSEG    (CODE)
-                                    456 	.area CONST   (CODE)
-                                    457 	.area XINIT   (CODE)
-                                    458 	.area CABS    (ABS,CODE)
+                                    372 ;	main.c:8: P0_7=0;		//第一列
+                                    373 ;	assignBit
+      000062 C2 87            [12]  374 	clr	_P0_7
+                                    375 ;	main.c:9: P0_1=0;		//第六列
+                                    376 ;	assignBit
+      000064 C2 81            [12]  377 	clr	_P0_1
+                                    378 ;	main.c:10: while(1)
+      000066                        379 00103$:
+                                    380 ;	main.c:12: unsigned char a,dat1=0xfe,dat2=0x01;	//unsinged char 0-255
+      000066 7F FE            [12]  381 	mov	r7,#0xfe
+                                    382 ;	main.c:13: P3_6=0;		//SPCLK 移位寄存器时钟输入 
+                                    383 ;	assignBit
+      000068 C2 B6            [12]  384 	clr	_P3_6
+                                    385 ;	main.c:14: P3_5=0;		//RCLK 	存储寄存器时钟输入 
+                                    386 ;	assignBit
+      00006A C2 B5            [12]  387 	clr	_P3_5
+                                    388 ;	main.c:16: for(a=0;a<8;a++)
+      00006C 7E 00            [12]  389 	mov	r6,#0x00
+      00006E                        390 00105$:
+                                    391 ;	main.c:18: P3_4= dat1 >> 7;		//SER 串行数据输入
+      00006E EF               [12]  392 	mov	a,r7
+      00006F 23               [12]  393 	rl	a
+      000070 54 01            [12]  394 	anl	a,#0x01
+                                    395 ;	assignBit
+      000072 24 FF            [12]  396 	add	a,#0xff
+      000074 92 B4            [24]  397 	mov	_P3_4,c
+                                    398 ;	main.c:19: dat1 <<= 1;
+      000076 8F 05            [24]  399 	mov	ar5,r7
+      000078 ED               [12]  400 	mov	a,r5
+      000079 2D               [12]  401 	add	a,r5
+      00007A FF               [12]  402 	mov	r7,a
+                                    403 ;	main.c:20: P3_6=1;
+                                    404 ;	assignBit
+      00007B D2 B6            [12]  405 	setb	_P3_6
+                                    406 ;	main.c:21: _nop_();	//执行一条空指令
+      00007D 00               [12]  407 	NOP	
+                                    408 ;	main.c:22: _nop_();
+      00007E 00               [12]  409 	NOP	
+                                    410 ;	main.c:23: P3_6=0;	
+                                    411 ;	assignBit
+      00007F C2 B6            [12]  412 	clr	_P3_6
+                                    413 ;	main.c:16: for(a=0;a<8;a++)
+      000081 0E               [12]  414 	inc	r6
+      000082 BE 08 00         [24]  415 	cjne	r6,#0x08,00122$
+      000085                        416 00122$:
+      000085 40 E7            [24]  417 	jc	00105$
+                                    418 ;	main.c:35: P3_5=0;
+                                    419 ;	assignBit
+      000087 C2 B5            [12]  420 	clr	_P3_5
+                                    421 ;	main.c:36: _nop_();
+      000089 00               [12]  422 	NOP	
+                                    423 ;	main.c:37: _nop_();
+      00008A 00               [12]  424 	NOP	
+                                    425 ;	main.c:38: P3_5=1;
+                                    426 ;	assignBit
+      00008B D2 B5            [12]  427 	setb	_P3_5
+                                    428 ;	main.c:40: }
+      00008D 80 D7            [24]  429 	sjmp	00103$
+                                    430 	.area CSEG    (CODE)
+                                    431 	.area CONST   (CODE)
+                                    432 	.area XINIT   (CODE)
+                                    433 	.area CABS    (ABS,CODE)
