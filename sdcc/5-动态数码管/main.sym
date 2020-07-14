@@ -336,7 +336,7 @@ Symbol Table
     __sdcc_gsinit_startup                                          ****** GX
   F __sdcc_program_startup                                         000003 GR
   7 __start__stack                                                 000000 GR
- 18 _main                                                          000083 GR
+ 18 _main                                                          000081 GR
     a                                                           =  0000E0 L
     a.0                                                         =  0000E0 L
     a.1                                                         =  0000E1 L

@@ -335,7 +335,7 @@ CSEG                                00000062    0000008A =         138. bytes (R
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
 C:   00000062  _DigDisplay                        main
-C:   000000E5  _main                              main
+C:   000000E3  _main                              main
 C:   000000E8  __sdcc_external_startup            _startup
 ASxxxx Linker V03.00 + NoICE + sdld,  page 16.
 Hexadecimal  [32-Bits]
