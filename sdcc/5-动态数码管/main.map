@@ -78,10 +78,10 @@ C:   0000005F  s_GSINIT
 C:   0000005F  s_GSINIT5                       
 C:   00000062  s_CSEG                          
 C:   00000080  l_DSEG                          
-C:   00000087  l_CSEG                          
-C:   000000E9  s_CONST                         
+C:   0000008A  l_CSEG                          
+C:   000000EC  s_CONST                         
 C:   000000F8  l_SSEG                          
-C:   000000FA  s_XINIT                         
+C:   000000FD  s_XINIT                         
 C:   00000100  l_IRAM                          
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
@@ -330,23 +330,23 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                00000062    00000087 =         135. bytes (REL,CON,CODE)
+CSEG                                00000062    0000008A =         138. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-C:   00000062  _main                              main
-C:   000000E5  __sdcc_external_startup            _startup
-
+C:   00000062  _DigDisplay                        main
+C:   000000E5  _main                              main
+C:   000000E8  __sdcc_external_startup            _startup
 ASxxxx Linker V03.00 + NoICE + sdld,  page 16.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CONST                               000000E9    00000011 =          17. bytes (REL,CON,CODE)
+CONST                               000000EC    00000011 =          17. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-C:   000000E9  _main_smgduan_65536_1              main
+C:   000000EC  _DigDisplay_smgduan_65536_1        main
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 17.
 

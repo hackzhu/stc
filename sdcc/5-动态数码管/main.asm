@@ -8,8 +8,9 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _main_smgduan_65536_1
+	.globl _DigDisplay_smgduan_65536_1
 	.globl _main
+	.globl _DigDisplay
 	.globl _TF2
 	.globl _EXF2
 	.globl _RCLK
@@ -351,16 +352,16 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
+;Allocation info for local variables in function 'DigDisplay'
 ;------------------------------------------------------------
 ;i                         Allocated to registers r7 
 ;k                         Allocated to registers r6 
 ;------------------------------------------------------------
-;	main.c:3: void main()
+;	main.c:3: void DigDisplay()
 ;	-----------------------------------------
-;	 function main
+;	 function DigDisplay
 ;	-----------------------------------------
-_main:
+_DigDisplay:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -482,7 +483,7 @@ _main:
 00109$:
 ;	main.c:22: P0=smgduan[i];//发送段码
 	mov	a,r7
-	mov	dptr,#_main_smgduan_65536_1
+	mov	dptr,#_DigDisplay_smgduan_65536_1
 	movc	a,@a+dptr
 	mov	_P0,a
 ;	main.c:23: for(k=0;k<100;k++); //间隔一段时间扫描	
@@ -504,9 +505,20 @@ _main:
 00152$:
 ;	main.c:27: }
 	ljmp	00125$
+;------------------------------------------------------------
+;Allocation info for local variables in function 'main'
+;------------------------------------------------------------
+;	main.c:30: void main()
+;	-----------------------------------------
+;	 function main
+;	-----------------------------------------
+_main:
+;	main.c:32: DigDisplay();
+;	main.c:33: }
+	ljmp	_DigDisplay
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
-_main_smgduan_65536_1:
+_DigDisplay_smgduan_65536_1:
 	.db #0x3f	; 63
 	.db #0x06	; 6
 	.db #0x5b	; 91
