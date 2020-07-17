@@ -364,7 +364,7 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:5: while(1) P2_2=0;
+;	main.c:5: while(1) P2_2=0;	//区别keil的P2^2	低电位可使LED灯点亮
 00102$:
 ;	assignBit
 	clr	_P2_2
