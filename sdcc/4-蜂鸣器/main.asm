@@ -369,8 +369,9 @@ _main:
 	ar0 = 0x00
 ;	main.c:7: while(1)
 00103$:
-;	main.c:9: P1_5=!P1_5;
-	cpl	_P1_5
+;	main.c:9: P1_5=~P1_5;
+;	assignBit
+	setb	_P1_5
 ;	main.c:10: for(i=0;i<3000;i++);
 	mov	_i,#0xb8
 	mov	(_i + 1),#0x0b
