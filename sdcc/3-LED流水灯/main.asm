@@ -355,7 +355,7 @@ __sdcc_program_startup:
 ;i                         Allocated to registers r6 r7 
 ;j                         Allocated to registers r6 r7 
 ;------------------------------------------------------------
-;	main.c:3: void main()
+;	main.c:5: void main()
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
@@ -368,7 +368,7 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:7: for(i=0;i<30000;i++);
+;	main.c:8: for(i=0;i<30000;i++);
 	mov	r6,#0x30
 	mov	r7,#0x75
 00109$:
@@ -379,12 +379,12 @@ _main:
 	mov	a,r6
 	orl	a,r7
 	jnz	00109$
-;	main.c:10: for(j=0;j<8;j++)
+;	main.c:11: for(j=0;j<8;j++)
 00121$:
 	mov	r6,#0x00
 	mov	r7,#0x00
 00113$:
-;	main.c:12: P2=0xff<<j;
+;	main.c:13: LED=0xff<<j;	//11111111 ...--> 11110000 ...--> 00000000
 	mov	ar5,r6
 	mov	b,r5
 	inc	b
@@ -395,7 +395,7 @@ _main:
 00149$:
 	djnz	b,00147$
 	mov	_P2,a
-;	main.c:13: for(i=0;i<30000;i++);
+;	main.c:14: for(i=0;i<30000;i++);
 	mov	r4,#0x30
 	mov	r5,#0x75
 00112$:
@@ -406,7 +406,7 @@ _main:
 	mov	a,r4
 	orl	a,r5
 	jnz	00112$
-;	main.c:10: for(j=0;j<8;j++)
+;	main.c:11: for(j=0;j<8;j++)
 	inc	r6
 	cjne	r6,#0x00,00152$
 	inc	r7
@@ -417,7 +417,7 @@ _main:
 	mov	a,r7
 	subb	a,#0x00
 	jc	00113$
-;	main.c:16: }
+;	main.c:17: }
 	sjmp	00121$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

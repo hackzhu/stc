@@ -354,7 +354,7 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;i                         Allocated to registers r6 r7 
 ;------------------------------------------------------------
-;	main.c:3: void main()
+;	main.c:5: void main()
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
@@ -367,12 +367,12 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:6: while(1)
+;	main.c:8: while(1)
 00104$:
-;	main.c:8: P2_7=1;
+;	main.c:10: LED8=1;
 ;	assignBit
 	setb	_P2_7
-;	main.c:9: for(i=0;i<30000;i++);
+;	main.c:11: for(i=0;i<30000;i++);	//延时函数
 	mov	r6,#0x30
 	mov	r7,#0x75
 00108$:
@@ -383,10 +383,10 @@ _main:
 	mov	a,r6
 	orl	a,r7
 	jnz	00108$
-;	main.c:10: P2_7=0;
+;	main.c:12: LED8=0;
 ;	assignBit
 	clr	_P2_7
-;	main.c:11: for(i=0;i<30000;i++);
+;	main.c:13: for(i=0;i<30000;i++);
 	mov	r6,#0x30
 	mov	r7,#0x75
 00111$:
@@ -397,7 +397,7 @@ _main:
 	mov	a,r6
 	orl	a,r7
 	jnz	00111$
-;	main.c:13: }
+;	main.c:15: }
 	sjmp	00104$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

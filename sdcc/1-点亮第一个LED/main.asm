@@ -351,7 +351,7 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;	main.c:3: void main()
+;	main.c:6: void main()
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
@@ -364,11 +364,11 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:5: while(1) P2_2=0;	//区别keil的P2^2	低电位可使LED灯点亮
+;	main.c:8: while(1) LED3=0;	//	低电位可使LED灯点亮
 00102$:
 ;	assignBit
 	clr	_P2_2
-;	main.c:6: }
+;	main.c:9: }
 	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

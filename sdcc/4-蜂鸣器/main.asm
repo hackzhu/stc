@@ -354,7 +354,7 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;	main.c:5: void main()
+;	main.c:7: void main()
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
@@ -367,12 +367,11 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:7: while(1)
+;	main.c:9: while(1)
 00103$:
-;	main.c:9: P1_5=~P1_5;
-;	assignBit
-	setb	_P1_5
-;	main.c:10: for(i=0;i<3000;i++);
+;	main.c:11: BEEP=!BEEP;		//无法使用~对P1_5取反
+	cpl	_P1_5
+;	main.c:12: for(i=0;i<3000;i++);
 	mov	_i,#0xb8
 	mov	(_i + 1),#0x0b
 00107$:
@@ -386,7 +385,7 @@ _main:
 	jnz	00107$
 	mov	_i,#0xb8
 	mov	(_i + 1),#0x0b
-;	main.c:12: }
+;	main.c:14: }
 	sjmp	00103$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
