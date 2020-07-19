@@ -9,6 +9,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
+	.globl _keyscan
 	.globl _TF2
 	.globl _EXF2
 	.globl _RCLK
@@ -128,6 +129,7 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
+	.globl _k
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -266,6 +268,8 @@ _TF2	=	0x00cf
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
+_k::
+	.ds 1
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -335,6 +339,8 @@ __interrupt_vect:
 	.globl __mcs51_genXINIT
 	.globl __mcs51_genXRAMCLEAR
 	.globl __mcs51_genRAMCLEAR
+;	main.c:12: unsigned char k=0;
+	mov	_k,#0x00
 	.area GSFINAL (CODE)
 	ljmp	__sdcc_program_startup
 ;--------------------------------------------------------
@@ -350,16 +356,15 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
+;Allocation info for local variables in function 'keyscan'
 ;------------------------------------------------------------
-;i                         Allocated to registers r5 r6 
-;k                         Allocated to registers r7 
+;i                         Allocated to registers r6 r7 
 ;------------------------------------------------------------
-;	main.c:12: void main()
+;	main.c:13: void keyscan()
 ;	-----------------------------------------
-;	 function main
+;	 function keyscan
 ;	-----------------------------------------
-_main:
+_keyscan:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -368,178 +373,190 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:15: unsigned char k=0;
-	mov	r7,#0x00
-;	main.c:16: while(1)
-00122$:
-;	main.c:21: P1=0x0f;		//00001111
+;	main.c:18: P1=0x0f;		//00001111
 	mov	_P1,#0x0f
-;	main.c:22: if(P1!=0x0f);
+;	main.c:19: if(P1!=0x0f);
 	mov	a,_P1
-;	main.c:24: for(i=0;i<1000;i++);
-	mov	r5,#0xe8
-	mov	r6,#0x03
-00126$:
-	mov	a,r5
-	add	a,#0xff
-	mov	r3,a
+;	main.c:21: for(i=0;i<1000;i++);
+	mov	r6,#0xe8
+	mov	r7,#0x03
+00114$:
 	mov	a,r6
-	addc	a,#0xff
+	add	a,#0xff
 	mov	r4,a
-	mov	ar5,r3
+	mov	a,r7
+	addc	a,#0xff
+	mov	r5,a
 	mov	ar6,r4
-	mov	a,r3
-	orl	a,r4
-	jnz	00126$
-;	main.c:25: if(P1!=0x0f);		//00001111 检测列
+	mov	ar7,r5
+	mov	a,r4
+	orl	a,r5
+	jnz	00114$
+;	main.c:22: if(P1!=0x0f);		//00001111 检测列
 	mov	a,_P1
-;	main.c:27: switch(P1)
-	mov	r6,_P1
-	cjne	r6,#0x07,00178$
+;	main.c:24: switch(P1)
+	mov	r7,_P1
+	cjne	r7,#0x07,00158$
 	sjmp	00102$
-00178$:
-	cjne	r6,#0x0b,00179$
+00158$:
+	cjne	r7,#0x0b,00159$
 	sjmp	00103$
-00179$:
-	cjne	r6,#0x0d,00180$
+00159$:
+	cjne	r7,#0x0d,00160$
 	sjmp	00104$
-00180$:
-;	main.c:29: case(0x07):k=0;break;	//00000111
-	cjne	r6,#0x0e,00106$
+00160$:
+;	main.c:26: case(0x07):k=0;break;	//00000111
+	cjne	r7,#0x0e,00106$
 	sjmp	00105$
 00102$:
-	mov	r7,#0x00
-;	main.c:30: case(0x0B):k=1;break;	//00001011
+	mov	_k,#0x00
+;	main.c:27: case(0x0B):k=1;break;	//00001011
 	sjmp	00106$
 00103$:
-	mov	r7,#0x01
-;	main.c:31: case(0x0D):k=2;break;	//00001101
+	mov	_k,#0x01
+;	main.c:28: case(0x0D):k=2;break;	//00001101
 	sjmp	00106$
 00104$:
-	mov	r7,#0x02
-;	main.c:32: case(0x0E):k=3;break;	//00001110
+	mov	_k,#0x02
+;	main.c:29: case(0x0E):k=3;break;	//00001110
 	sjmp	00106$
 00105$:
-	mov	r7,#0x03
-;	main.c:34: }
+	mov	_k,#0x03
+;	main.c:30: }
 00106$:
-;	main.c:35: P1=0xf0;		//11110000 检测行
+;	main.c:31: P1=0xf0;		//11110000 检测行
 	mov	_P1,#0xf0
-;	main.c:36: switch(P1)
-	mov	r6,_P1
-	cjne	r6,#0x70,00182$
+;	main.c:32: switch(P1)
+	mov	r7,_P1
+	cjne	r7,#0x70,00162$
 	sjmp	00111$
-00182$:
-	cjne	r6,#0xb0,00183$
+00162$:
+	cjne	r7,#0xb0,00163$
 	sjmp	00108$
-00183$:
-	cjne	r6,#0xd0,00184$
+00163$:
+	cjne	r7,#0xd0,00164$
 	sjmp	00109$
-00184$:
-;	main.c:39: case(0xB0):k+=10;break;	//10110000
-	cjne	r6,#0xe0,00111$
+00164$:
+;	main.c:34: case(0x70):k+=0;break;	//01110000
+	cjne	r7,#0xe0,00111$
 	sjmp	00110$
+;	main.c:35: case(0xB0):k+=10;break;	//10110000
+	sjmp	00111$
 00108$:
-	mov	ar6,r7
+	mov	r7,_k
 	mov	a,#0x0a
-	add	a,r6
-	mov	r7,a
-;	main.c:40: case(0xD0):k+=20;break;	//11010000
+	add	a,r7
+	mov	_k,a
+;	main.c:36: case(0xD0):k+=20;break;	//11010000
 	sjmp	00111$
 00109$:
-	mov	ar6,r7
+	mov	r7,_k
 	mov	a,#0x14
-	add	a,r6
-	mov	r7,a
-;	main.c:41: case(0xE0):k+=30;break;	//11100000
+	add	a,r7
+	mov	_k,a
+;	main.c:37: case(0xE0):k+=30;break;	//11100000
 	sjmp	00111$
 00110$:
-	mov	ar6,r7
+	mov	r7,_k
 	mov	a,#0x1e
-	add	a,r6
-	mov	r7,a
-;	main.c:42: }
+	add	a,r7
+	mov	_k,a
+;	main.c:38: }
 00111$:
-;	main.c:45: P2=0xff;
+;	main.c:40: P2=0xff;
 	mov	_P2,#0xff
-;	main.c:46: switch(k)				//通过相加数字来确定按键
-	mov	a,r7
+;	main.c:42: }
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'main'
+;------------------------------------------------------------
+;	main.c:44: void main()
+;	-----------------------------------------
+;	 function main
+;	-----------------------------------------
+_main:
+;	main.c:46: while(1)
+00111$:
+;	main.c:48: keyscan();
+	lcall	_keyscan
+;	main.c:49: switch(k)				//通过相加数字来确定按键
+	mov	a,_k
 	add	a,#0xff - 0x0d
-	jc	00122$
-	mov	a,r7
-	add	a,#(00187$-3-.)
+	jc	00111$
+	mov	a,_k
+	add	a,#(00124$-3-.)
 	movc	a,@a+pc
 	mov	dpl,a
-	mov	a,r7
-	add	a,#(00188$-3-.)
+	mov	a,_k
+	add	a,#(00125$-3-.)
 	movc	a,@a+pc
 	mov	dph,a
 	clr	a
 	jmp	@a+dptr
-00187$:
-	.db	00112$
-	.db	00113$
-	.db	00114$
-	.db	00115$
-	.db	00122$
-	.db	00122$
-	.db	00122$
-	.db	00122$
-	.db	00122$
-	.db	00122$
-	.db	00116$
-	.db	00117$
-	.db	00118$
-	.db	00119$
-00188$:
-	.db	00112$>>8
-	.db	00113$>>8
-	.db	00114$>>8
-	.db	00115$>>8
-	.db	00122$>>8
-	.db	00122$>>8
-	.db	00122$>>8
-	.db	00122$>>8
-	.db	00122$>>8
-	.db	00122$>>8
-	.db	00116$>>8
-	.db	00117$>>8
-	.db	00118$>>8
-	.db	00119$>>8
-;	main.c:48: case(0):LED1=!LED1;break;
-00112$:
+00124$:
+	.db	00101$
+	.db	00102$
+	.db	00103$
+	.db	00104$
+	.db	00111$
+	.db	00111$
+	.db	00111$
+	.db	00111$
+	.db	00111$
+	.db	00111$
+	.db	00105$
+	.db	00106$
+	.db	00107$
+	.db	00108$
+00125$:
+	.db	00101$>>8
+	.db	00102$>>8
+	.db	00103$>>8
+	.db	00104$>>8
+	.db	00111$>>8
+	.db	00111$>>8
+	.db	00111$>>8
+	.db	00111$>>8
+	.db	00111$>>8
+	.db	00111$>>8
+	.db	00105$>>8
+	.db	00106$>>8
+	.db	00107$>>8
+	.db	00108$>>8
+;	main.c:51: case(0):LED1=!LED1;break;
+00101$:
 	cpl	_P2_0
-	ljmp	00122$
-;	main.c:49: case(1):LED2=!LED2;break;
-00113$:
+	ljmp	00111$
+;	main.c:52: case(1):LED2=!LED2;break;
+00102$:
 	cpl	_P2_1
-	ljmp	00122$
-;	main.c:50: case(2):LED3=!LED3;break;
-00114$:
+	ljmp	00111$
+;	main.c:53: case(2):LED3=!LED3;break;
+00103$:
 	cpl	_P2_2
-	ljmp	00122$
-;	main.c:51: case(3):LED4=!LED4;break;
-00115$:
+	ljmp	00111$
+;	main.c:54: case(3):LED4=!LED4;break;
+00104$:
 	cpl	_P2_3
-	ljmp	00122$
-;	main.c:52: case(10):LED5=!LED5;break;
-00116$:
+	ljmp	00111$
+;	main.c:55: case(10):LED5=!LED5;break;
+00105$:
 	cpl	_P2_4
-	ljmp	00122$
-;	main.c:53: case(11):LED6=!LED6;break;
-00117$:
+	ljmp	00111$
+;	main.c:56: case(11):LED6=!LED6;break;
+00106$:
 	cpl	_P2_5
-	ljmp	00122$
-;	main.c:54: case(12):LED7=!LED7;break;
-00118$:
+	ljmp	00111$
+;	main.c:57: case(12):LED7=!LED7;break;
+00107$:
 	cpl	_P2_6
-	ljmp	00122$
-;	main.c:55: case(13):LED8=!LED8;break;
-00119$:
+	ljmp	00111$
+;	main.c:58: case(13):LED8=!LED8;break;
+00108$:
 	cpl	_P2_7
-;	main.c:64: }
-;	main.c:66: }
-	ljmp	00122$
+;	main.c:67: }
+;	main.c:69: }
+	ljmp	00111$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)
