@@ -355,7 +355,7 @@ __sdcc_program_startup:
 ;i                         Allocated to registers r5 r6 
 ;k                         Allocated to registers r7 
 ;------------------------------------------------------------
-;	main.c:3: void main()
+;	main.c:12: void main()
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
@@ -368,15 +368,15 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:6: unsigned char k=0;
+;	main.c:15: unsigned char k=0;
 	mov	r7,#0x00
-;	main.c:7: while(1)
+;	main.c:16: while(1)
 00122$:
-;	main.c:12: P1=0x0f;		//00001111
+;	main.c:21: P1=0x0f;		//00001111
 	mov	_P1,#0x0f
-;	main.c:13: if(P1!=0x0f);
+;	main.c:22: if(P1!=0x0f);
 	mov	a,_P1
-;	main.c:15: for(i=0;i<1000;i++);
+;	main.c:24: for(i=0;i<1000;i++);
 	mov	r5,#0xe8
 	mov	r6,#0x03
 00126$:
@@ -391,9 +391,9 @@ _main:
 	mov	a,r3
 	orl	a,r4
 	jnz	00126$
-;	main.c:16: if(P1!=0x0f);		//00001111 检测列
+;	main.c:25: if(P1!=0x0f);		//00001111 检测列
 	mov	a,_P1
-;	main.c:18: switch(P1)
+;	main.c:27: switch(P1)
 	mov	r6,_P1
 	cjne	r6,#0x07,00178$
 	sjmp	00102$
@@ -404,28 +404,28 @@ _main:
 	cjne	r6,#0x0d,00180$
 	sjmp	00104$
 00180$:
-;	main.c:20: case(0x07):k=0;break;	//00000111
+;	main.c:29: case(0x07):k=0;break;	//00000111
 	cjne	r6,#0x0e,00106$
 	sjmp	00105$
 00102$:
 	mov	r7,#0x00
-;	main.c:21: case(0x0B):k=1;break;	//00001011
+;	main.c:30: case(0x0B):k=1;break;	//00001011
 	sjmp	00106$
 00103$:
 	mov	r7,#0x01
-;	main.c:22: case(0x0D):k=2;break;	//00001101
+;	main.c:31: case(0x0D):k=2;break;	//00001101
 	sjmp	00106$
 00104$:
 	mov	r7,#0x02
-;	main.c:23: case(0x0E):k=3;break;	//00001110
+;	main.c:32: case(0x0E):k=3;break;	//00001110
 	sjmp	00106$
 00105$:
 	mov	r7,#0x03
-;	main.c:25: }
+;	main.c:34: }
 00106$:
-;	main.c:26: P1=0xf0;		//11110000 检测行
+;	main.c:35: P1=0xf0;		//11110000 检测行
 	mov	_P1,#0xf0
-;	main.c:27: switch(P1)
+;	main.c:36: switch(P1)
 	mov	r6,_P1
 	cjne	r6,#0x70,00182$
 	sjmp	00111$
@@ -436,7 +436,7 @@ _main:
 	cjne	r6,#0xd0,00184$
 	sjmp	00109$
 00184$:
-;	main.c:30: case(0xB0):k+=10;break;	//10110000
+;	main.c:39: case(0xB0):k+=10;break;	//10110000
 	cjne	r6,#0xe0,00111$
 	sjmp	00110$
 00108$:
@@ -444,25 +444,25 @@ _main:
 	mov	a,#0x0a
 	add	a,r6
 	mov	r7,a
-;	main.c:31: case(0xD0):k+=20;break;	//11010000
+;	main.c:40: case(0xD0):k+=20;break;	//11010000
 	sjmp	00111$
 00109$:
 	mov	ar6,r7
 	mov	a,#0x14
 	add	a,r6
 	mov	r7,a
-;	main.c:32: case(0xE0):k+=30;break;	//11100000
+;	main.c:41: case(0xE0):k+=30;break;	//11100000
 	sjmp	00111$
 00110$:
 	mov	ar6,r7
 	mov	a,#0x1e
 	add	a,r6
 	mov	r7,a
-;	main.c:33: }
+;	main.c:42: }
 00111$:
-;	main.c:36: P2=0xff;
+;	main.c:45: P2=0xff;
 	mov	_P2,#0xff
-;	main.c:37: switch(k)				//通过相加数字来确定按键
+;	main.c:46: switch(k)				//通过相加数字来确定按键
 	mov	a,r7
 	add	a,#0xff - 0x0d
 	jc	00122$
@@ -506,39 +506,39 @@ _main:
 	.db	00117$>>8
 	.db	00118$>>8
 	.db	00119$>>8
-;	main.c:39: case(0):P2_0=!P2_0;break;
+;	main.c:48: case(0):LED1=!LED1;break;
 00112$:
 	cpl	_P2_0
 	ljmp	00122$
-;	main.c:40: case(1):P2_1=!P2_1;break;
+;	main.c:49: case(1):LED2=!LED2;break;
 00113$:
 	cpl	_P2_1
 	ljmp	00122$
-;	main.c:41: case(2):P2_2=!P2_2;break;
+;	main.c:50: case(2):LED3=!LED3;break;
 00114$:
 	cpl	_P2_2
 	ljmp	00122$
-;	main.c:42: case(3):P2_3=!P2_3;break;
+;	main.c:51: case(3):LED4=!LED4;break;
 00115$:
 	cpl	_P2_3
 	ljmp	00122$
-;	main.c:43: case(10):P2_4=!P2_4;break;
+;	main.c:52: case(10):LED5=!LED5;break;
 00116$:
 	cpl	_P2_4
 	ljmp	00122$
-;	main.c:44: case(11):P2_5=!P2_5;break;
+;	main.c:53: case(11):LED6=!LED6;break;
 00117$:
 	cpl	_P2_5
 	ljmp	00122$
-;	main.c:45: case(12):P2_6=!P2_6;break;
+;	main.c:54: case(12):LED7=!LED7;break;
 00118$:
 	cpl	_P2_6
 	ljmp	00122$
-;	main.c:46: case(13):P2_7=!P2_7;break;
+;	main.c:55: case(13):LED8=!LED8;break;
 00119$:
 	cpl	_P2_7
-;	main.c:55: }
-;	main.c:57: }
+;	main.c:64: }
+;	main.c:66: }
 	ljmp	00122$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

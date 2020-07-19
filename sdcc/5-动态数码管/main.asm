@@ -357,7 +357,7 @@ __sdcc_program_startup:
 ;i                         Allocated to registers r7 
 ;k                         Allocated to registers r6 
 ;------------------------------------------------------------
-;	main.c:3: void DigDisplay()
+;	main.c:7: void DigDisplay()
 ;	-----------------------------------------
 ;	 function DigDisplay
 ;	-----------------------------------------
@@ -370,10 +370,10 @@ _DigDisplay:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:7: for(i=0;i<8;i++)
+;	main.c:11: for(i=0;i<8;i++)
 	mov	r7,#0x00
 00115$:
-;	main.c:9: switch(i)	 //位选，选择点亮的数码管，
+;	main.c:13: switch(i)	 //位选，选择点亮的数码管，
 	mov	a,r7
 	add	a,#0xff - 0x07
 	jnc	00136$
@@ -407,7 +407,7 @@ _DigDisplay:
 	.db	00106$>>8
 	.db	00107$>>8
 	.db	00108$>>8
-;	main.c:11: case(0):P2_2=1;P2_3=1;P2_4=1; break;//显示第0位 111
+;	main.c:15: case(0):LSA=1;LSB=1;LSC=1; break;//显示第0位 111
 00101$:
 ;	assignBit
 	setb	_P2_2
@@ -415,7 +415,7 @@ _DigDisplay:
 	setb	_P2_3
 ;	assignBit
 	setb	_P2_4
-;	main.c:12: case(1):P2_2=0;P2_3=1;P2_4=1; break;//显示第1位 011
+;	main.c:16: case(1):LSA=0;LSB=1;LSC=1; break;//显示第1位 011
 	sjmp	00109$
 00102$:
 ;	assignBit
@@ -424,7 +424,7 @@ _DigDisplay:
 	setb	_P2_3
 ;	assignBit
 	setb	_P2_4
-;	main.c:13: case(2):P2_2=1;P2_3=0;P2_4=1; break;//显示第2位	101
+;	main.c:17: case(2):LSA=1;LSB=0;LSC=1; break;//显示第2位 101
 	sjmp	00109$
 00103$:
 ;	assignBit
@@ -433,7 +433,7 @@ _DigDisplay:
 	clr	_P2_3
 ;	assignBit
 	setb	_P2_4
-;	main.c:14: case(3):P2_2=0;P2_3=0;P2_4=1; break;//显示第3位	001
+;	main.c:18: case(3):LSA=0;LSB=0;LSC=1; break;//显示第3位 001
 	sjmp	00109$
 00104$:
 ;	assignBit
@@ -442,7 +442,7 @@ _DigDisplay:
 	clr	_P2_3
 ;	assignBit
 	setb	_P2_4
-;	main.c:15: case(4):P2_2=1;P2_3=1;P2_4=0; break;//显示第4位	110
+;	main.c:19: case(4):LSA=1;LSB=1;LSC=0; break;//显示第4位 110
 	sjmp	00109$
 00105$:
 ;	assignBit
@@ -451,7 +451,7 @@ _DigDisplay:
 	setb	_P2_3
 ;	assignBit
 	clr	_P2_4
-;	main.c:16: case(5):P2_2=0;P2_3=1;P2_4=0; break;//显示第5位	010
+;	main.c:20: case(5):LSA=0;LSB=1;LSC=0; break;//显示第5位 010
 	sjmp	00109$
 00106$:
 ;	assignBit
@@ -460,7 +460,7 @@ _DigDisplay:
 	setb	_P2_3
 ;	assignBit
 	clr	_P2_4
-;	main.c:17: case(6):P2_2=1;P2_3=0;P2_4=0; break;//显示第6位	100
+;	main.c:21: case(6):LSA=1;LSB=0;LSC=0; break;//显示第6位 100
 	sjmp	00109$
 00107$:
 ;	assignBit
@@ -469,7 +469,7 @@ _DigDisplay:
 	clr	_P2_3
 ;	assignBit
 	clr	_P2_4
-;	main.c:18: case(7):P2_2=0;P2_3=0;P2_4=0; break;//显示第7位	000
+;	main.c:22: case(7):LSA=0;LSB=0;LSC=0; break;//显示第7位 000
 	sjmp	00109$
 00108$:
 ;	assignBit
@@ -478,44 +478,44 @@ _DigDisplay:
 	clr	_P2_3
 ;	assignBit
 	clr	_P2_4
-;	main.c:19: }
+;	main.c:23: }
 00109$:
-;	main.c:20: P0=smgduan[i];//发送段码
+;	main.c:24: P0=smgduan[i];//发送段码
 	mov	a,r7
 	mov	dptr,#_DigDisplay_smgduan_65536_1
 	movc	a,@a+dptr
 	mov	_P0,a
-;	main.c:21: for(k=0;k<100;k++); //间隔一段时间扫描	
+;	main.c:25: for(k=0;k<100;k++); //间隔一段时间扫描	
 	mov	r6,#0x64
 00114$:
 	mov	a,r6
 	dec	a
 	mov	r5,a
 	mov	r6,a
-;	main.c:22: P0=0x00;//消隐
+;	main.c:26: P0=0x00;//消隐
 	jnz	00114$
 	mov	_P0,a
-;	main.c:7: for(i=0;i<8;i++)
+;	main.c:11: for(i=0;i<8;i++)
 	inc	r7
 	cjne	r7,#0x08,00140$
 00140$:
 	jnc	00141$
 	ljmp	00115$
 00141$:
-;	main.c:24: }
+;	main.c:28: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;	main.c:27: void main()
+;	main.c:31: void main()
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	main.c:29: while(1) DigDisplay();
+;	main.c:33: while(1) DigDisplay();
 00102$:
 	lcall	_DigDisplay
-;	main.c:30: }
+;	main.c:34: }
 	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

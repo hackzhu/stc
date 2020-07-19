@@ -355,7 +355,7 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;i                         Allocated to registers 
 ;------------------------------------------------------------
-;	main.c:3: void delay(unsigned int i)
+;	main.c:6: void delay(unsigned int i)
 ;	-----------------------------------------
 ;	 function delay
 ;	-----------------------------------------
@@ -370,7 +370,7 @@ _delay:
 	ar0 = 0x00
 	mov	r6,dpl
 	mov	r7,dph
-;	main.c:5: while(i--);
+;	main.c:8: while(i--);
 00101$:
 	mov	ar4,r6
 	mov	ar5,r7
@@ -381,30 +381,30 @@ _delay:
 	mov	a,r4
 	orl	a,r5
 	jnz	00101$
-;	main.c:6: }
+;	main.c:9: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;	main.c:9: void main()
+;	main.c:12: void main()
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	main.c:11: while(1)
+;	main.c:14: while(1)
 00109$:
-;	main.c:13: if(P3_0==0)
+;	main.c:16: if(KEY2==0)
 	jb	_P3_0,00109$
-;	main.c:15: delay(1000);
+;	main.c:18: delay(1000);
 	mov	dptr,#0x03e8
 	lcall	_delay
-;	main.c:16: if(P3_0==0) P2_0=!P2_0;
+;	main.c:19: if(KEY2==0) LED1=!LED1;
 	jb	_P3_0,00103$
 	cpl	_P2_0
-;	main.c:17: while(!P3_0);
+;	main.c:20: while(!KEY2);
 00103$:
 	jnb	_P3_0,00103$
-;	main.c:20: }
+;	main.c:23: }
 	sjmp	00109$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

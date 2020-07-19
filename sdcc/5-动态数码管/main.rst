@@ -357,7 +357,7 @@
                                     357 ;i                         Allocated to registers r7 
                                     358 ;k                         Allocated to registers r6 
                                     359 ;------------------------------------------------------------
-                                    360 ;	main.c:3: void DigDisplay()
+                                    360 ;	main.c:7: void DigDisplay()
                                     361 ;	-----------------------------------------
                                     362 ;	 function DigDisplay
                                     363 ;	-----------------------------------------
@@ -370,10 +370,10 @@
                            000002   370 	ar2 = 0x02
                            000001   371 	ar1 = 0x01
                            000000   372 	ar0 = 0x00
-                                    373 ;	main.c:7: for(i=0;i<8;i++)
+                                    373 ;	main.c:11: for(i=0;i<8;i++)
       000062 7F 00            [12]  374 	mov	r7,#0x00
       000064                        375 00115$:
-                                    376 ;	main.c:9: switch(i)	 //位选，选择点亮的数码管，
+                                    376 ;	main.c:13: switch(i)	 //位选，选择点亮的数码管，
       000064 EF               [12]  377 	mov	a,r7
       000065 24 F8            [12]  378 	add	a,#0xff - 0x07
       000067 50 03            [24]  379 	jnc	00136$
@@ -407,7 +407,7 @@
       000087 00                     407 	.db	00106$>>8
       000088 00                     408 	.db	00107$>>8
       000089 00                     409 	.db	00108$>>8
-                                    410 ;	main.c:11: case(0):P2_2=1;P2_3=1;P2_4=1; break;//显示第0位 111
+                                    410 ;	main.c:15: case(0):LSA=1;LSB=1;LSC=1; break;//显示第0位 111
       00008A                        411 00101$:
                                     412 ;	assignBit
       00008A D2 A2            [12]  413 	setb	_P2_2
@@ -415,7 +415,7 @@
       00008C D2 A3            [12]  415 	setb	_P2_3
                                     416 ;	assignBit
       00008E D2 A4            [12]  417 	setb	_P2_4
-                                    418 ;	main.c:12: case(1):P2_2=0;P2_3=1;P2_4=1; break;//显示第1位 011
+                                    418 ;	main.c:16: case(1):LSA=0;LSB=1;LSC=1; break;//显示第1位 011
       000090 80 36            [24]  419 	sjmp	00109$
       000092                        420 00102$:
                                     421 ;	assignBit
@@ -424,7 +424,7 @@
       000094 D2 A3            [12]  424 	setb	_P2_3
                                     425 ;	assignBit
       000096 D2 A4            [12]  426 	setb	_P2_4
-                                    427 ;	main.c:13: case(2):P2_2=1;P2_3=0;P2_4=1; break;//显示第2位	101
+                                    427 ;	main.c:17: case(2):LSA=1;LSB=0;LSC=1; break;//显示第2位 101
       000098 80 2E            [24]  428 	sjmp	00109$
       00009A                        429 00103$:
                                     430 ;	assignBit
@@ -433,7 +433,7 @@
       00009C C2 A3            [12]  433 	clr	_P2_3
                                     434 ;	assignBit
       00009E D2 A4            [12]  435 	setb	_P2_4
-                                    436 ;	main.c:14: case(3):P2_2=0;P2_3=0;P2_4=1; break;//显示第3位	001
+                                    436 ;	main.c:18: case(3):LSA=0;LSB=0;LSC=1; break;//显示第3位 001
       0000A0 80 26            [24]  437 	sjmp	00109$
       0000A2                        438 00104$:
                                     439 ;	assignBit
@@ -442,7 +442,7 @@
       0000A4 C2 A3            [12]  442 	clr	_P2_3
                                     443 ;	assignBit
       0000A6 D2 A4            [12]  444 	setb	_P2_4
-                                    445 ;	main.c:15: case(4):P2_2=1;P2_3=1;P2_4=0; break;//显示第4位	110
+                                    445 ;	main.c:19: case(4):LSA=1;LSB=1;LSC=0; break;//显示第4位 110
       0000A8 80 1E            [24]  446 	sjmp	00109$
       0000AA                        447 00105$:
                                     448 ;	assignBit
@@ -451,7 +451,7 @@
       0000AC D2 A3            [12]  451 	setb	_P2_3
                                     452 ;	assignBit
       0000AE C2 A4            [12]  453 	clr	_P2_4
-                                    454 ;	main.c:16: case(5):P2_2=0;P2_3=1;P2_4=0; break;//显示第5位	010
+                                    454 ;	main.c:20: case(5):LSA=0;LSB=1;LSC=0; break;//显示第5位 010
       0000B0 80 16            [24]  455 	sjmp	00109$
       0000B2                        456 00106$:
                                     457 ;	assignBit
@@ -460,7 +460,7 @@
       0000B4 D2 A3            [12]  460 	setb	_P2_3
                                     461 ;	assignBit
       0000B6 C2 A4            [12]  462 	clr	_P2_4
-                                    463 ;	main.c:17: case(6):P2_2=1;P2_3=0;P2_4=0; break;//显示第6位	100
+                                    463 ;	main.c:21: case(6):LSA=1;LSB=0;LSC=0; break;//显示第6位 100
       0000B8 80 0E            [24]  464 	sjmp	00109$
       0000BA                        465 00107$:
                                     466 ;	assignBit
@@ -469,7 +469,7 @@
       0000BC C2 A3            [12]  469 	clr	_P2_3
                                     470 ;	assignBit
       0000BE C2 A4            [12]  471 	clr	_P2_4
-                                    472 ;	main.c:18: case(7):P2_2=0;P2_3=0;P2_4=0; break;//显示第7位	000
+                                    472 ;	main.c:22: case(7):LSA=0;LSB=0;LSC=0; break;//显示第7位 000
       0000C0 80 06            [24]  473 	sjmp	00109$
       0000C2                        474 00108$:
                                     475 ;	assignBit
@@ -478,44 +478,44 @@
       0000C4 C2 A3            [12]  478 	clr	_P2_3
                                     479 ;	assignBit
       0000C6 C2 A4            [12]  480 	clr	_P2_4
-                                    481 ;	main.c:19: }
+                                    481 ;	main.c:23: }
       0000C8                        482 00109$:
-                                    483 ;	main.c:20: P0=smgduan[i];//发送段码
+                                    483 ;	main.c:24: P0=smgduan[i];//发送段码
       0000C8 EF               [12]  484 	mov	a,r7
       0000C9 90 00 EC         [24]  485 	mov	dptr,#_DigDisplay_smgduan_65536_1
       0000CC 93               [24]  486 	movc	a,@a+dptr
       0000CD F5 80            [12]  487 	mov	_P0,a
-                                    488 ;	main.c:21: for(k=0;k<100;k++); //间隔一段时间扫描	
+                                    488 ;	main.c:25: for(k=0;k<100;k++); //间隔一段时间扫描	
       0000CF 7E 64            [12]  489 	mov	r6,#0x64
       0000D1                        490 00114$:
       0000D1 EE               [12]  491 	mov	a,r6
       0000D2 14               [12]  492 	dec	a
       0000D3 FD               [12]  493 	mov	r5,a
       0000D4 FE               [12]  494 	mov	r6,a
-                                    495 ;	main.c:22: P0=0x00;//消隐
+                                    495 ;	main.c:26: P0=0x00;//消隐
       0000D5 70 FA            [24]  496 	jnz	00114$
       0000D7 F5 80            [12]  497 	mov	_P0,a
-                                    498 ;	main.c:7: for(i=0;i<8;i++)
+                                    498 ;	main.c:11: for(i=0;i<8;i++)
       0000D9 0F               [12]  499 	inc	r7
       0000DA BF 08 00         [24]  500 	cjne	r7,#0x08,00140$
       0000DD                        501 00140$:
       0000DD 50 03            [24]  502 	jnc	00141$
       0000DF 02 00 64         [24]  503 	ljmp	00115$
       0000E2                        504 00141$:
-                                    505 ;	main.c:24: }
+                                    505 ;	main.c:28: }
       0000E2 22               [24]  506 	ret
                                     507 ;------------------------------------------------------------
                                     508 ;Allocation info for local variables in function 'main'
                                     509 ;------------------------------------------------------------
-                                    510 ;	main.c:27: void main()
+                                    510 ;	main.c:31: void main()
                                     511 ;	-----------------------------------------
                                     512 ;	 function main
                                     513 ;	-----------------------------------------
       0000E3                        514 _main:
-                                    515 ;	main.c:29: while(1) DigDisplay();
+                                    515 ;	main.c:33: while(1) DigDisplay();
       0000E3                        516 00102$:
       0000E3 12 00 62         [24]  517 	lcall	_DigDisplay
-                                    518 ;	main.c:30: }
+                                    518 ;	main.c:34: }
       0000E6 80 FB            [24]  519 	sjmp	00102$
                                     520 	.area CSEG    (CODE)
                                     521 	.area CONST   (CODE)

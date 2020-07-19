@@ -1,5 +1,9 @@
 #include<8052.h>
 
+#define LSA P2_2
+#define LSB P2_3
+#define LSC P2_4
+
 void DigDisplay()
 {
 	unsigned char i,k;	//unsigned char:0~255
@@ -8,14 +12,14 @@ void DigDisplay()
 	{
 		switch(i)	 //位选，选择点亮的数码管，
 		{
-			case(0):P2_2=1;P2_3=1;P2_4=1; break;//显示第0位 111
-			case(1):P2_2=0;P2_3=1;P2_4=1; break;//显示第1位 011
-			case(2):P2_2=1;P2_3=0;P2_4=1; break;//显示第2位	101
-			case(3):P2_2=0;P2_3=0;P2_4=1; break;//显示第3位	001
-			case(4):P2_2=1;P2_3=1;P2_4=0; break;//显示第4位	110
-			case(5):P2_2=0;P2_3=1;P2_4=0; break;//显示第5位	010
-			case(6):P2_2=1;P2_3=0;P2_4=0; break;//显示第6位	100
-			case(7):P2_2=0;P2_3=0;P2_4=0; break;//显示第7位	000
+			case(0):LSA=1;LSB=1;LSC=1; break;//显示第0位 111
+			case(1):LSA=0;LSB=1;LSC=1; break;//显示第1位 011
+			case(2):LSA=1;LSB=0;LSC=1; break;//显示第2位 101
+			case(3):LSA=0;LSB=0;LSC=1; break;//显示第3位 001
+			case(4):LSA=1;LSB=1;LSC=0; break;//显示第4位 110
+			case(5):LSA=0;LSB=1;LSC=0; break;//显示第5位 010
+			case(6):LSA=1;LSB=0;LSC=0; break;//显示第6位 100
+			case(7):LSA=0;LSB=0;LSC=0; break;//显示第7位 000
 		}
 		P0=smgduan[i];//发送段码
 		for(k=0;k<100;k++); //间隔一段时间扫描	

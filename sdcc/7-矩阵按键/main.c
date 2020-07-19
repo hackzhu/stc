@@ -1,5 +1,14 @@
 #include<8052.h>
 
+#define LED1 P2_0
+#define LED2 P2_1
+#define LED3 P2_2
+#define LED4 P2_3
+#define LED5 P2_4
+#define LED6 P2_5
+#define LED7 P2_6
+#define LED8 P2_7
+
 void main()
 {
 	unsigned int i;
@@ -36,22 +45,22 @@ void main()
 		P2=0xff;
 		switch(k)				//通过相加数字来确定按键
 		{
-			case(0):P2_0=!P2_0;break;
-			case(1):P2_1=!P2_1;break;
-			case(2):P2_2=!P2_2;break;
-			case(3):P2_3=!P2_3;break;
-			case(10):P2_4=!P2_4;break;
-			case(11):P2_5=!P2_5;break;
-			case(12):P2_6=!P2_6;break;
-			case(13):P2_7=!P2_7;break;
+			case(0):LED1=!LED1;break;
+			case(1):LED2=!LED2;break;
+			case(2):LED3=!LED3;break;
+			case(3):LED4=!LED4;break;
+			case(10):LED5=!LED5;break;
+			case(11):LED6=!LED6;break;
+			case(12):LED7=!LED7;break;
+			case(13):LED8=!LED8;break;
 //			case(20):P2_9=0;break;
-//			case(21):P2_4=0;break;
-//			case(22):P2_5=0;break;
-//			case(23):P2_6=0;break;
-//			case(30):P2_7=0;break;
-//			case(31):P2_4=0;break;
-//			case(32):P2_4=0;break;
-//			case(33):P2_5=0;break;
+//			case(21):LED5=0;break;
+//			case(22):LED6=0;break;
+//			case(23):LED7=0;break;
+//			case(30):LED8=0;break;
+//			case(31):LED5=0;break;
+//			case(32):LED5=0;break;
+//			case(33):LED6=0;break;
 		}
 	}
 }
