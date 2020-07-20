@@ -30,6 +30,6 @@ void hc595(unsigned char dat)
 
 void main()
 {
-	LED1=0;		
-	while(1) hc595(0x80);
+	LED1=0;			//使74hc595通入高电平点亮	
+	while(1) hc595(0x80);	//1000 0000
 }
