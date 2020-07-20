@@ -8,7 +8,9 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
+	.globl _hc595_PARM_2
 	.globl _main
+	.globl _hc595
 	.globl _TF2
 	.globl _EXF2
 	.globl _RCLK
@@ -270,6 +272,8 @@ _TF2	=	0x00cf
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
 	.area	OSEG    (OVR,DATA)
+_hc595_PARM_2:
+	.ds 1
 ;--------------------------------------------------------
 ; Stack segment in internal ram 
 ;--------------------------------------------------------
@@ -350,17 +354,17 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
+;Allocation info for local variables in function 'hc595'
 ;------------------------------------------------------------
-;a                         Allocated to registers r6 
+;dat2                      Allocated with name '_hc595_PARM_2'
 ;dat1                      Allocated to registers r7 
-;dat2                      Allocated to registers 
+;a                         Allocated to registers r6 
 ;------------------------------------------------------------
-;	main.c:6: void main()
+;	main.c:10: void hc595(unsigned char dat1,unsigned char dat2)
 ;	-----------------------------------------
-;	 function main
+;	 function hc595
 ;	-----------------------------------------
-_main:
+_hc595:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -369,64 +373,103 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	main.c:8: P0_7=0;		//第一列
-;	assignBit
-	clr	_P0_7
-;	main.c:9: P0_1=0;		//第六列
-;	assignBit
-	clr	_P0_1
-;	main.c:10: while(1)
-00103$:
-;	main.c:12: unsigned char a,dat1=0xfe,dat2=0x01;	//unsinged char 0-255
-	mov	r7,#0xfe
-;	main.c:13: P3_6=0;		//SPCLK 移位寄存器时钟输入 
+	mov	r7,dpl
+;	main.c:13: SRCLK=0;
 ;	assignBit
 	clr	_P3_6
-;	main.c:14: P3_5=0;		//RCLK 	存储寄存器时钟输入 
+;	main.c:14: RCLK=0;		
 ;	assignBit
 	clr	_P3_5
-;	main.c:16: for(a=0;a<8;a++)
+;	main.c:15: for(a=0;a<8;a++)	//发送8位数
 	mov	r6,#0x00
-00105$:
-;	main.c:18: P3_4= dat1 >> 7;		//SER 串行数据输入
+00103$:
+;	main.c:17: SER= dat1 >> 7;		
 	mov	a,r7
 	rl	a
 	anl	a,#0x01
 ;	assignBit
 	add	a,#0xff
 	mov	_P3_4,c
-;	main.c:19: dat1 <<= 1;
+;	main.c:18: dat1 <<= 1;
 	mov	ar5,r7
 	mov	a,r5
 	add	a,r5
 	mov	r7,a
-;	main.c:20: P3_6=1;
+;	main.c:19: SRCLK=1;	//0 --> 1 上升沿
 ;	assignBit
 	setb	_P3_6
-;	main.c:21: _nop_();	//执行一条空指令
+;	main.c:20: _nop_();	//执行一条空指令
 	NOP	
-;	main.c:22: _nop_();
+;	main.c:21: _nop_();
 	NOP	
-;	main.c:23: P3_6=0;	
+;	main.c:22: SRCLK=0;
 ;	assignBit
 	clr	_P3_6
-;	main.c:16: for(a=0;a<8;a++)
+;	main.c:15: for(a=0;a<8;a++)	//发送8位数
 	inc	r6
-	cjne	r6,#0x08,00122$
-00122$:
+	cjne	r6,#0x08,00127$
+00127$:
+	jc	00103$
+;	main.c:24: for(a=0;a<8;a++)
+	mov	r7,#0x00
+00105$:
+;	main.c:26: SER= dat2 >> 7;	
+	mov	a,_hc595_PARM_2
+	rl	a
+	anl	a,#0x01
+;	assignBit
+	add	a,#0xff
+	mov	_P3_4,c
+;	main.c:27: dat2 <<= 1;
+	mov	a,_hc595_PARM_2
+	mov	r6,a
+	add	a,acc
+	mov	_hc595_PARM_2,a
+;	main.c:28: SRCLK=0;
+;	assignBit
+	clr	_P3_6
+;	main.c:29: _nop_();
+	NOP	
+;	main.c:30: _nop_();
+	NOP	
+;	main.c:31: SRCLK=1;	
+;	assignBit
+	setb	_P3_6
+;	main.c:24: for(a=0;a<8;a++)
+	inc	r7
+	cjne	r7,#0x08,00129$
+00129$:
 	jc	00105$
-;	main.c:35: P3_5=0;
+;	main.c:33: RCLK=0;
 ;	assignBit
 	clr	_P3_5
-;	main.c:36: _nop_();
+;	main.c:34: _nop_();
 	NOP	
-;	main.c:37: _nop_();
+;	main.c:35: _nop_();
 	NOP	
-;	main.c:38: P3_5=1;
+;	main.c:36: RCLK=1;
 ;	assignBit
 	setb	_P3_5
-;	main.c:40: }
-	sjmp	00103$
+;	main.c:37: }
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'main'
+;------------------------------------------------------------
+;	main.c:39: void main()
+;	-----------------------------------------
+;	 function main
+;	-----------------------------------------
+_main:
+;	main.c:41: LED1=0;		
+;	assignBit
+	clr	_P0_7
+;	main.c:42: while(1) hc595(0xfe,0x01);	
+00102$:
+	mov	_hc595_PARM_2,#0x01
+	mov	dpl,#0xfe
+	lcall	_hc595
+;	main.c:43: }
+	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)
