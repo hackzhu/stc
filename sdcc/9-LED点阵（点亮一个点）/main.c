@@ -11,24 +11,25 @@ void hc595(unsigned char dat)
 {
 	unsigned char a;
 	SRCLK=0;
-	RCLK=0;		
+	RCLK=0;
 	for(a=0;a<8;a++)	//发送8位数
 	{
-		SER= dat >> 7;		
-		dat <<= 1;
-		SRCLK=1;	//0 --> 1 上升沿
+		SER= dat >> 7;	//读取最高位	
+		dat <<= 1;	//改变最高位
+
+		SRCLK=1;	//0 --> 1 上升沿	实现移位
 		_nop_();	//执行一条空指令
-		_nop_();
+		_nop_();	//595通信需要时间
 		SRCLK=0;	//1 --> 0 下降沿
 	}
-	RCLK=0;
-	_nop_();
-	_nop_();
 	RCLK=1;
+	_nop_();
+	_nop_();
+	RCLK=0;
 }
 
 void main()
 {
 	LED1=0;		
-	while(1) hc595(0xfe);	
+	while(1) hc595(0x80);
 }

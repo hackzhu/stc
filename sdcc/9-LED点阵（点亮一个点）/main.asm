@@ -8,7 +8,6 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _hc595_PARM_2
 	.globl _main
 	.globl _hc595
 	.globl _TF2
@@ -272,8 +271,6 @@ _TF2	=	0x00cf
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
 	.area	OSEG    (OVR,DATA)
-_hc595_PARM_2:
-	.ds 1
 ;--------------------------------------------------------
 ; Stack segment in internal ram 
 ;--------------------------------------------------------
@@ -356,11 +353,10 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'hc595'
 ;------------------------------------------------------------
-;dat2                      Allocated with name '_hc595_PARM_2'
-;dat1                      Allocated to registers r7 
+;dat                       Allocated to registers r7 
 ;a                         Allocated to registers r6 
 ;------------------------------------------------------------
-;	main.c:10: void hc595(unsigned char dat1,unsigned char dat2)
+;	main.c:10: void hc595(unsigned char dat)
 ;	-----------------------------------------
 ;	 function hc595
 ;	-----------------------------------------
@@ -377,98 +373,67 @@ _hc595:
 ;	main.c:13: SRCLK=0;
 ;	assignBit
 	clr	_P3_6
-;	main.c:14: RCLK=0;		
+;	main.c:14: RCLK=0;
 ;	assignBit
 	clr	_P3_5
 ;	main.c:15: for(a=0;a<8;a++)	//发送8位数
 	mov	r6,#0x00
-00103$:
-;	main.c:17: SER= dat1 >> 7;		
+00102$:
+;	main.c:17: SER= dat >> 7;	//读取最高位	
 	mov	a,r7
 	rl	a
 	anl	a,#0x01
 ;	assignBit
 	add	a,#0xff
 	mov	_P3_4,c
-;	main.c:18: dat1 <<= 1;
+;	main.c:18: dat <<= 1;	//改变最高位
 	mov	ar5,r7
 	mov	a,r5
 	add	a,r5
 	mov	r7,a
-;	main.c:19: SRCLK=1;	//0 --> 1 上升沿
+;	main.c:20: SRCLK=1;	//0 --> 1 上升沿	实现移位
 ;	assignBit
 	setb	_P3_6
-;	main.c:20: _nop_();	//执行一条空指令
+;	main.c:21: _nop_();	//执行一条空指令
 	NOP	
-;	main.c:21: _nop_();
+;	main.c:22: _nop_();	//595通信需要时间
 	NOP	
-;	main.c:22: SRCLK=0;
+;	main.c:23: SRCLK=0;	//1 --> 0 下降沿
 ;	assignBit
 	clr	_P3_6
 ;	main.c:15: for(a=0;a<8;a++)	//发送8位数
 	inc	r6
-	cjne	r6,#0x08,00127$
-00127$:
-	jc	00103$
-;	main.c:24: for(a=0;a<8;a++)
-	mov	r7,#0x00
-00105$:
-;	main.c:26: SER= dat2 >> 7;	
-	mov	a,_hc595_PARM_2
-	rl	a
-	anl	a,#0x01
-;	assignBit
-	add	a,#0xff
-	mov	_P3_4,c
-;	main.c:27: dat2 <<= 1;
-	mov	a,_hc595_PARM_2
-	mov	r6,a
-	add	a,acc
-	mov	_hc595_PARM_2,a
-;	main.c:28: SRCLK=0;
-;	assignBit
-	clr	_P3_6
-;	main.c:29: _nop_();
-	NOP	
-;	main.c:30: _nop_();
-	NOP	
-;	main.c:31: SRCLK=1;	
-;	assignBit
-	setb	_P3_6
-;	main.c:24: for(a=0;a<8;a++)
-	inc	r7
-	cjne	r7,#0x08,00129$
-00129$:
-	jc	00105$
-;	main.c:33: RCLK=0;
-;	assignBit
-	clr	_P3_5
-;	main.c:34: _nop_();
-	NOP	
-;	main.c:35: _nop_();
-	NOP	
-;	main.c:36: RCLK=1;
+	cjne	r6,#0x08,00115$
+00115$:
+	jc	00102$
+;	main.c:25: RCLK=1;
 ;	assignBit
 	setb	_P3_5
-;	main.c:37: }
+;	main.c:26: _nop_();
+	NOP	
+;	main.c:27: _nop_();
+	NOP	
+;	main.c:28: RCLK=0;
+;	assignBit
+	clr	_P3_5
+;	main.c:29: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;	main.c:39: void main()
+;	main.c:31: void main()
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	main.c:41: LED1=0;		
+;	main.c:33: LED1=0;		
 ;	assignBit
 	clr	_P0_7
-;	main.c:42: while(1) hc595(0xfe,0x01);	
+;	main.c:34: while(1) hc595(0x80);
 00102$:
-	mov	_hc595_PARM_2,#0x01
-	mov	dpl,#0xfe
+	mov	dpl,#0x80
 	lcall	_hc595
-;	main.c:43: }
+;	main.c:35: }
 	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
