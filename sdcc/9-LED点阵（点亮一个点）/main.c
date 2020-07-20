@@ -7,15 +7,15 @@
 #define LED1  P0_7	//第一列
 #define _nop_() __asm NOP __endasm	//_nop_()  
 
-void hc595(unsigned char dat1,unsigned char dat2)
+void hc595(unsigned char dat)
 {
 	unsigned char a;
 	SRCLK=0;
 	RCLK=0;		
 	for(a=0;a<8;a++)	//发送8位数
 	{
-		SER= dat1 >> 7;		
-		dat1 <<= 1;
+		SER= dat >> 7;		
+		dat <<= 1;
 		SRCLK=1;	//0 --> 1 上升沿
 		_nop_();	//执行一条空指令
 		_nop_();
@@ -30,5 +30,5 @@ void hc595(unsigned char dat1,unsigned char dat2)
 void main()
 {
 	LED1=0;		
-	while(1) hc595(0xfe,0x01);	
+	while(1) hc595(0xfe);	
 }
