@@ -19,16 +19,7 @@ void hc595(unsigned char dat1,unsigned char dat2)
 		SRCLK=1;	//0 --> 1 上升沿
 		_nop_();	//执行一条空指令
 		_nop_();
-		SRCLK=0;
-	}
-	for(a=0;a<8;a++)
-	{
-		SER= dat2 >> 7;	
-		dat2 <<= 1;
-		SRCLK=0;
-		_nop_();
-		_nop_();
-		SRCLK=1;	
+		SRCLK=0;	//1 --> 0 下降沿
 	}
 	RCLK=0;
 	_nop_();
