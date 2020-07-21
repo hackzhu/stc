@@ -1,4 +1,4 @@
-#include <8052.h>
+#include "8052.h"
 //74hc595
 #define	SER   P3_4	//串行数据输入
 #define	RCLK  P3_5	//存储寄存器时钟输入 

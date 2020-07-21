@@ -1,4 +1,4 @@
-#include<8052.h>
+#include"8052.h"
 
 #define LED3 P2_2
 //区别keil的P2^2

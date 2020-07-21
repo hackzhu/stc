@@ -1,4 +1,4 @@
-#include <8052.h>
+#include "8052.h"
 
 #define BEEP P1_5
 

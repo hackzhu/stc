@@ -1,4 +1,4 @@
-#include <8052.h>
+#include "8052.h"
 
 #define KEY2 P3_0
 #define LED1 P2_0

@@ -1,4 +1,4 @@
-#include <8052.h>
+#include "8052.h"
 
 unsigned char ssec,sec,min; //毫秒，秒，分
 unsigned char DisplayData[8];
