@@ -78,60 +78,59 @@ Symbol Table
     b.0     =  0000F0 L   |     b.1     =  0000F1 L   |     b.2     =  0000F2 L
     b.3     =  0000F3 L   |     b.4     =  0000F4 L   |     b.5     =  0000F5 L
     b.6     =  0000F6 L   |     b.7     =  0000F7 L   |     cprl2   =  0000C8 L
-    ct2     =  0000C9 L   |     cx         ****** GX  |     cy      =  0000D7 L
-    delay      ****** GX  |     dph     =  000083 L   |     dpl     =  000082 L
-    ea      =  0000AF L   |     es      =  0000AC L   |     et0     =  0000A9 L
-    et1     =  0000AB L   |     et2     =  0000AD L   |     ex0     =  0000A8 L
-    ex1     =  0000AA L   |     exen2   =  0000CB L   |     exf2    =  0000CE L
-    f0      =  0000D5 L   |     ie      =  0000A8 L   |     ie.0    =  0000A8 L
-    ie.1    =  0000A9 L   |     ie.2    =  0000AA L   |     ie.3    =  0000AB L
-    ie.4    =  0000AC L   |     ie.5    =  0000AD L   |     ie.7    =  0000AF L
-    ie0     =  000089 L   |     ie1     =  00008B L   |     int0    =  0000B2 L
-    int1    =  0000B3 L   |     ip      =  0000B8 L   |     ip.0    =  0000B8 L
-    ip.1    =  0000B9 L   |     ip.2    =  0000BA L   |     ip.3    =  0000BB L
-    ip.4    =  0000BC L   |     ip.5    =  0000BD L   |     it0     =  000088 L
-    it1     =  00008A L   |   2 leding     000000 R   |   2 loop       000007 R
-    ov      =  0000D2 L   |     p       =  0000D0 L   |     p0      =  000080 L
-    p0.0    =  000080 L   |     p0.1    =  000081 L   |     p0.2    =  000082 L
-    p0.3    =  000083 L   |     p0.4    =  000084 L   |     p0.5    =  000085 L
-    p0.6    =  000086 L   |     p0.7    =  000087 L   |     p1      =  000090 L
-    p1.0    =  000090 L   |     p1.1    =  000091 L   |     p1.2    =  000092 L
-    p1.3    =  000093 L   |     p1.4    =  000094 L   |     p1.5    =  000095 L
-    p1.6    =  000096 L   |     p1.7    =  000097 L   |     p2      =  0000A0 L
-    p2.0    =  0000A0 L   |     p2.1    =  0000A1 L   |     p2.2    =  0000A2 L
-    p2.3    =  0000A3 L   |     p2.4    =  0000A4 L   |     p2.5    =  0000A5 L
-    p2.6    =  0000A6 L   |     p2.7    =  0000A7 L   |     p3      =  0000B0 L
-    p3.0    =  0000B0 L   |     p3.1    =  0000B1 L   |     p3.2    =  0000B2 L
-    p3.3    =  0000B3 L   |     p3.4    =  0000B4 L   |     p3.5    =  0000B5 L
-    p3.6    =  0000B6 L   |     p3.7    =  0000B7 L   |     pcon    =  000087 L
-    ps      =  0000BC L   |     psw     =  0000D0 L   |     psw.0   =  0000D0 L
-    psw.1   =  0000D1 L   |     psw.2   =  0000D2 L   |     psw.3   =  0000D3 L
-    psw.4   =  0000D4 L   |     psw.5   =  0000D5 L   |     psw.6   =  0000D6 L
-    psw.7   =  0000D7 L   |     pt0     =  0000B9 L   |     pt1     =  0000BB L
-    pt2     =  0000BD L   |     px0     =  0000B8 L   |     px1     =  0000BA L
-    rb8     =  00009A L   |     rcap2h  =  0000CB L   |     rcap2l  =  0000CA L
-    rclk    =  0000CD L   |     ren     =  00009C L   |     ri      =  000098 L
-    rs0     =  0000D3 L   |     rs1     =  0000D4 L   |     rxd     =  0000B0 L
-    sbuf    =  000099 L   |     scon    =  000098 L   |     scon.0  =  000098 L
-    scon.1  =  000099 L   |     scon.2  =  00009A L   |     scon.3  =  00009B L
-    scon.4  =  00009C L   |     scon.5  =  00009D L   |     scon.6  =  00009E L
-    scon.7  =  00009F L   |     sm0     =  00009F L   |     sm1     =  00009E L
-    sm2     =  00009D L   |     sp      =  000081 L   |   2 start      000000 R
-    t2con   =  0000C8 L   |     t2con.0 =  0000C8 L   |     t2con.1 =  0000C9 L
+    ct2     =  0000C9 L   |     cy      =  0000D7 L   |     delay      ****** GX
+    dph     =  000083 L   |     dpl     =  000082 L   |     ea      =  0000AF L
+    es      =  0000AC L   |     et0     =  0000A9 L   |     et1     =  0000AB L
+    et2     =  0000AD L   |     ex0     =  0000A8 L   |     ex1     =  0000AA L
+    exen2   =  0000CB L   |     exf2    =  0000CE L   |     f0      =  0000D5 L
+    ie      =  0000A8 L   |     ie.0    =  0000A8 L   |     ie.1    =  0000A9 L
+    ie.2    =  0000AA L   |     ie.3    =  0000AB L   |     ie.4    =  0000AC L
+    ie.5    =  0000AD L   |     ie.7    =  0000AF L   |     ie0     =  000089 L
+    ie1     =  00008B L   |     int0    =  0000B2 L   |     int1    =  0000B3 L
+    ip      =  0000B8 L   |     ip.0    =  0000B8 L   |     ip.1    =  0000B9 L
+    ip.2    =  0000BA L   |     ip.3    =  0000BB L   |     ip.4    =  0000BC L
+    ip.5    =  0000BD L   |     it0     =  000088 L   |     it1     =  00008A L
+  2 nooverlo   000000 R   |     ov      =  0000D2 L   |     p       =  0000D0 L
+    p0      =  000080 L   |     p0.0    =  000080 L   |     p0.1    =  000081 L
+    p0.2    =  000082 L   |     p0.3    =  000083 L   |     p0.4    =  000084 L
+    p0.5    =  000085 L   |     p0.6    =  000086 L   |     p0.7    =  000087 L
+    p1      =  000090 L   |     p1.0    =  000090 L   |     p1.1    =  000091 L
+    p1.2    =  000092 L   |     p1.3    =  000093 L   |     p1.4    =  000094 L
+    p1.5    =  000095 L   |     p1.6    =  000096 L   |     p1.7    =  000097 L
+    p2      =  0000A0 L   |     p2.0    =  0000A0 L   |     p2.1    =  0000A1 L
+    p2.2    =  0000A2 L   |     p2.3    =  0000A3 L   |     p2.4    =  0000A4 L
+    p2.5    =  0000A5 L   |     p2.6    =  0000A6 L   |     p2.7    =  0000A7 L
+    p3      =  0000B0 L   |     p3.0    =  0000B0 L   |     p3.1    =  0000B1 L
+    p3.2    =  0000B2 L   |     p3.3    =  0000B3 L   |     p3.4    =  0000B4 L
+    p3.5    =  0000B5 L   |     p3.6    =  0000B6 L   |     p3.7    =  0000B7 L
+    pcon    =  000087 L   |     ps      =  0000BC L   |     psw     =  0000D0 L
+    psw.0   =  0000D0 L   |     psw.1   =  0000D1 L   |     psw.2   =  0000D2 L
+    psw.3   =  0000D3 L   |     psw.4   =  0000D4 L   |     psw.5   =  0000D5 L
+    psw.6   =  0000D6 L   |     psw.7   =  0000D7 L   |     pt0     =  0000B9 L
+    pt1     =  0000BB L   |     pt2     =  0000BD L   |     px0     =  0000B8 L
+    px1     =  0000BA L   |     rb8     =  00009A L   |     rcap2h  =  0000CB L
+    rcap2l  =  0000CA L   |     rclk    =  0000CD L   |     ren     =  00009C L
+    ri      =  000098 L   |     rs0     =  0000D3 L   |     rs1     =  0000D4 L
+    rxd     =  0000B0 L   |     sbuf    =  000099 L   |     scon    =  000098 L
+    scon.0  =  000098 L   |     scon.1  =  000099 L   |     scon.2  =  00009A L
+    scon.3  =  00009B L   |     scon.4  =  00009C L   |     scon.5  =  00009D L
+    scon.6  =  00009E L   |     scon.7  =  00009F L   |     sm0     =  00009F L
+    sm1     =  00009E L   |     sm2     =  00009D L   |     sp      =  000081 L
+  2 start      000000 R   |     t2con   =  0000C8 L   |     t2con.0 =  0000C8 L
+    t2con.1 =  0000C9 L   |     t2con.2 =  0000CA L   |     t2con.3 =  0000CB L
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051), page 3.
 Hexadecimal [24-Bits]
 
 Symbol Table
 
-    t2con.2 =  0000CA L   |     t2con.3 =  0000CB L   |     t2con.4 =  0000CC L
-    t2con.5 =  0000CD L   |     t2con.6 =  0000CE L   |     t2con.7 =  0000CF L
-    tb8     =  00009B L   |     tclk    =  0000CC L   |     tcon    =  000088 L
-    tcon.0  =  000088 L   |     tcon.1  =  000089 L   |     tcon.2  =  00008A L
-    tcon.3  =  00008B L   |     tcon.4  =  00008C L   |     tcon.5  =  00008D L
-    tcon.6  =  00008E L   |     tcon.7  =  00008F L   |     tf0     =  00008D L
-    tf1     =  00008F L   |     tf2     =  0000CF L   |     th0     =  00008C L
-    th1     =  00008D L   |     th2     =  0000CD L   |     ti      =  000099 L
-  2 timedela   000005 R   |     tl0     =  00008A L   |     tl1     =  00008B L
+    t2con.4 =  0000CC L   |     t2con.5 =  0000CD L   |     t2con.6 =  0000CE L
+    t2con.7 =  0000CF L   |     tb8     =  00009B L   |     tclk    =  0000CC L
+    tcon    =  000088 L   |     tcon.0  =  000088 L   |     tcon.1  =  000089 L
+    tcon.2  =  00008A L   |     tcon.3  =  00008B L   |     tcon.4  =  00008C L
+    tcon.5  =  00008D L   |     tcon.6  =  00008E L   |     tcon.7  =  00008F L
+    tf0     =  00008D L   |     tf1     =  00008F L   |     tf2     =  0000CF L
+    th0     =  00008C L   |     th1     =  00008D L   |     th2     =  0000CD L
+    ti      =  000099 L   |     tl0     =  00008A L   |     tl1     =  00008B L
     tl2     =  0000CC L   |     tmod    =  000089 L   |     tr0     =  00008C L
     tr1     =  00008E L   |     tr2     =  0000CA L   |     txd     =  0000B1 L
 
@@ -142,5 +141,5 @@ Area Table
 
    0 _CODE      size      0   flags    0
    1 rseg       size      0   flags    8
-   2 rseg0      size      7   flags    8
+   2 rseg0      size     20   flags    8
 

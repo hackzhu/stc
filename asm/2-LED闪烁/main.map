@@ -3,10 +3,11 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-rseg0                               00000000    00000002 =           2. bytes (ABS,CON)
+rseg0                               00000000    00000020 =          32. bytes (ABS,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
+     00000000  delay                           
      00000000  l_BIT_BANK                      
      00000000  l_BSEG                          
      00000000  l_BSEG_BYTES                    
@@ -26,17 +27,16 @@ rseg0                               00000000    00000002 =           2. bytes (A
      00000000  s_SSEG                          
      00000000  s_rseg                          
      00000000  s_rseg0                         
-     00000002  l_DSEG                          
-     00000002  l_rseg0                         
      00000008  s_REG_BANK_1                    
      00000010  s_REG_BANK_2                    
      00000018  s_BIT_BANK                      
      00000018  s_OSEG                          
      00000018  s_REG_BANK_3                    
+     00000020  l_DSEG                          
+     00000020  l_rseg0                         
      00000020  s_BSEG_BYTES                    
      00000020  s__CODE                         
      00000100  l_IRAM                          
-
 ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
@@ -54,7 +54,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-DSEG                                00000000    00000002 =           2. bytes (REL,CON)
+DSEG                                00000000    00000020 =          32. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -75,3 +75,4 @@ ISEG = 0x0000
 BSEG = 0x0000
 
 
+?ASlink-Warning-Undefined Global 'delay' referenced by module ''
