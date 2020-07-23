@@ -1,0 +1,14 @@
+XH3
+H 3 areas 3 global symbols
+S P2_0 Def0000A0
+S .__.ABS. Def000000
+S $ Ref000000
+A _CODE size 0 flags 0 addr 0
+A RSEG size 0 flags 8 addr 0
+A RSEG0 size 4 flags 8 addr 0
+T 00 00 00
+R 00 00 00 02
+T 00 00 00
+R 00 00 00 02
+T 00 00 00 C2 A0 80 00 00 00
+R 00 00 00 02 F1 07 06 00 02
