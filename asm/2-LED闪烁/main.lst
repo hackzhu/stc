@@ -1,0 +1,13 @@
+                                      1 .globl P2_0
+                                      2 .globl delay
+                                      3 .area rseg (abs,data)
+      000000                          4 .org 0x0000
+                           0000A0     5 P2_0=0x00A0
+      000000                          6 start:
+      000000                          7 leding:
+      000000 C2 A0            [12]    8 clr P2_0
+d     000002 85 E8*00         [24]    9 mov cx, 1000
+      000005                         10 timedelay:
+mp    000005                         11 loop:timedelay
+      000005 D2 A0            [12]   12 setb P2_0
+mp    000007                         13 loop:ledring
