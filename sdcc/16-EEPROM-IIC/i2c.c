@@ -32,7 +32,7 @@ void I2cStop()
 
 unsigned char I2c(unsigned char dat)
 {
-	unsigned char a,b;
+	unsigned char a,b=0;
 	for(a=0;a<8;a++)
 	{
 		SDA=dat>>7;
@@ -50,8 +50,11 @@ unsigned char I2c(unsigned char dat)
 	{
 		b++;
 		if(b>200)
+		{
 		SCL=0;
+		I2cDelay();
 		return 0;	//应答
+		}
 	}
 	SCL=0;
 	I2cDelay();
@@ -60,7 +63,7 @@ unsigned char I2c(unsigned char dat)
 
 unsigned char I2cRead()
 {
-	unsigned char a,dat;
+	unsigned char a,dat=0;
 	SDA=1;
 	I2cDelay();
 	for(a=0;a<8;a++)
@@ -73,6 +76,7 @@ unsigned char I2cRead()
 		SCL=0;
 		I2cDelay();
 	}
+	return dat;
 }
 
 void At24c02Write(unsigned char addr,unsigned char dat)

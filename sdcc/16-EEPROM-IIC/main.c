@@ -20,7 +20,12 @@ void Datepros();
 
 void main()
 {
-	while(1) DigDisplay();
+	while(1)
+	{
+		Keypros();
+		Datepros();
+		DigDisplay();
+	}
 }
 
 void Delay(unsigned int i)
@@ -39,14 +44,14 @@ void Datepros()
 void DigDisplay()
 {
 	unsigned char i,k;	//unsigned char:0~255
-	for(i=0;i<8;i++)
+	for(i=0;i<4;i++)
 	{
 		switch(i)	 //位选，选择点亮的数码管，
 		{
-			case(0):LSA=1;LSB=1;LSC=1; break;//显示第0位 111
-			case(1):LSA=0;LSB=1;LSC=1; break;//显示第1位 011
-			case(2):LSA=1;LSB=0;LSC=1; break;//显示第2位 101
-			case(3):LSA=0;LSB=0;LSC=1; break;//显示第3位 001
+			case(0):LSA=1;LSB=1;LSC=0; break;//显示第4位 110
+			case(1):LSA=0;LSB=1;LSC=0; break;//显示第5位 010
+			case(2):LSA=1;LSB=0;LSC=0; break;//显示第6位 100
+			case(3):LSA=0;LSB=0;LSC=0; break;//显示第7位 000
 		}
 		P0=disp[i];//发送段码
 		for(k=0;k<100;k++); //间隔一段时间扫描	
@@ -59,13 +64,13 @@ void Keypros()
 	if(k1==0)
 	{
 		Delay(1000);
-		if(k1==0) At24c02Write(1,num);
+		if(k1==0) At24c02Write(1,num);	//在地址1内写入数据num
 		while(!k1);
 	}
 	if(k2==0)
 	{
 		Delay(1000);
-		if(k2==0) num=At24c02Read(1);
+		if(k2==0) num=At24c02Read(1);	//读取EEPROM地址1内的数据保存在num中
 		while(!k2);
 	}
 	if(k3==0)
@@ -74,7 +79,7 @@ void Keypros()
 		if(k3==0)
 		{
 			num++;
-			if(num>255) num=0;
+			if(num>=255) num=0;
 		}
 		while(!k3);
 	}
