@@ -75,3 +75,24 @@ unsigned char I2cRead()
 	}
 }
 
+void At24c02Write(unsigned char addr,unsigned char dat)
+{
+	I2cStart();
+	I2c(0xa0);	//发送写器件地址 P2_0 SDA
+	I2c(addr);	//发送要写入的内存地址
+	I2c(dat);	//发送数据
+	I2cStop();
+}
+
+unsigned char At24c02Read(unsigned char addr)
+{
+	unsigned char num;
+	I2cStart();
+	I2c(0xa0);	//发送写器件地址 P2_0 SDA
+	I2c(addr);	//发送要写入的内存地址
+	I2cStart();
+	I2c(0xa1);	//发送读器件地址 P2_1 SCL
+	num=I2cRead();	//读取数据
+	I2cStop();
+	return num;
+}
