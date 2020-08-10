@@ -39,9 +39,9 @@ void Timer0Init()
 	ET0=1;		//打开定时器0中断
 
 
-//给定时器赋初值
-	TH0=0xd8;	//1101 1000
-	TL0=0xf0;	//1111 0000
+//给定时器赋初值 10ms
+	TH0=0xdc;	//1101 1100
+	TL0=0x00;	//0000 0000
 }
 
 void datapros()
@@ -58,8 +58,8 @@ void datapros()
 
 void Timer0() __interrupt 1
 {
-	TH0=0xd8;	//1101 1000
-	TL0=0xf0;	//1111 0000
+	TH0=0xdc;	//1101 1100
+	TL0=0x00;	//0000 0000
 	ssec++;
 	if(ssec>=100)
 	{

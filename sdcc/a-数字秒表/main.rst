@@ -275,14 +275,14 @@
                                     275 ; internal ram data
                                     276 ;--------------------------------------------------------
                                     277 	.area DSEG    (DATA)
-      000000                        278 _ssec::
-      000000                        279 	.ds 1
-      000001                        280 _sec::
-      000001                        281 	.ds 1
-      000002                        282 _min::
-      000002                        283 	.ds 1
-      000003                        284 _DisplayData::
-      000003                        285 	.ds 8
+      000008                        278 _ssec::
+      000008                        279 	.ds 1
+      000009                        280 _sec::
+      000009                        281 	.ds 1
+      00000A                        282 _min::
+      00000A                        283 	.ds 1
+      00000B                        284 _DisplayData::
+      00000B                        285 	.ds 8
                                     286 ;--------------------------------------------------------
                                     287 ; overlayable items in internal ram 
                                     288 ;--------------------------------------------------------
@@ -291,8 +291,8 @@
                                     291 ; Stack segment in internal ram 
                                     292 ;--------------------------------------------------------
                                     293 	.area	SSEG
-      000000                        294 __start__stack:
-      000000                        295 	.ds	1
+      000015                        294 __start__stack:
+      000015                        295 	.ds	1
                                     296 
                                     297 ;--------------------------------------------------------
                                     298 ; indirectly addressable internal ram data
@@ -338,10 +338,10 @@
                                     338 ;--------------------------------------------------------
                                     339 	.area HOME    (CODE)
       000000                        340 __interrupt_vect:
-      000000 02r00r00         [24]  341 	ljmp	__sdcc_gsinit_startup
+      000000 02 00 11         [24]  341 	ljmp	__sdcc_gsinit_startup
       000003 32               [24]  342 	reti
       000004                        343 	.ds	7
-      00000B 02r01r69         [24]  344 	ljmp	_Timer0
+      00000B 02 01 D6         [24]  344 	ljmp	_Timer0
                                     345 ;--------------------------------------------------------
                                     346 ; global & static initialisations
                                     347 ;--------------------------------------------------------
@@ -356,14 +356,14 @@
                                     356 	.globl __mcs51_genXRAMCLEAR
                                     357 	.globl __mcs51_genRAMCLEAR
                                     358 	.area GSFINAL (CODE)
-      000000 02r00r0E         [24]  359 	ljmp	__sdcc_program_startup
+      00006A 02 00 0E         [24]  359 	ljmp	__sdcc_program_startup
                                     360 ;--------------------------------------------------------
                                     361 ; Home
                                     362 ;--------------------------------------------------------
                                     363 	.area HOME    (CODE)
                                     364 	.area HOME    (CODE)
       00000E                        365 __sdcc_program_startup:
-      00000E 02r01r99         [24]  366 	ljmp	_main
+      00000E 02 02 06         [24]  366 	ljmp	_main
                                     367 ;	return from main will return to caller
                                     368 ;--------------------------------------------------------
                                     369 ; code
@@ -379,7 +379,7 @@
                                     379 ;	-----------------------------------------
                                     380 ;	 function DigDisplay
                                     381 ;	-----------------------------------------
-      000000                        382 _DigDisplay:
+      00006D                        382 _DigDisplay:
                            000007   383 	ar7 = 0x07
                            000006   384 	ar6 = 0x06
                            000005   385 	ar5 = 0x05
@@ -389,139 +389,139 @@
                            000001   389 	ar1 = 0x01
                            000000   390 	ar0 = 0x00
                                     391 ;	main.c:10: for(i=0;i<8;i++)
-      000000 7F 00            [12]  392 	mov	r7,#0x00
-      000002                        393 00115$:
+      00006D 7F 00            [12]  392 	mov	r7,#0x00
+      00006F                        393 00115$:
                                     394 ;	main.c:12: switch(i)	 //位选，选择点亮的数码管，
-      000002 EF               [12]  395 	mov	a,r7
-      000003 24 F8            [12]  396 	add	a,#0xff - 0x07
-      000005 50 03            [24]  397 	jnc	00136$
-      000007 02r00r66         [24]  398 	ljmp	00109$
-      00000A                        399 00136$:
-      00000A EF               [12]  400 	mov	a,r7
-      00000B 24 0A            [12]  401 	add	a,#(00137$-3-.)
-      00000D 83               [24]  402 	movc	a,@a+pc
-      00000E F5 82            [12]  403 	mov	dpl,a
-      000010 EF               [12]  404 	mov	a,r7
-      000011 24 0C            [12]  405 	add	a,#(00138$-3-.)
-      000013 83               [24]  406 	movc	a,@a+pc
-      000014 F5 83            [12]  407 	mov	dph,a
-      000016 E4               [12]  408 	clr	a
-      000017 73               [24]  409 	jmp	@a+dptr
-      000018                        410 00137$:
-      000018r28                     411 	.db	00101$
-      000019r30                     412 	.db	00102$
-      00001Ar38                     413 	.db	00103$
-      00001Br40                     414 	.db	00104$
-      00001Cr48                     415 	.db	00105$
-      00001Dr50                     416 	.db	00106$
-      00001Er58                     417 	.db	00107$
-      00001Fr60                     418 	.db	00108$
-      000020                        419 00138$:
-      000020s00                     420 	.db	00101$>>8
-      000021s00                     421 	.db	00102$>>8
-      000022s00                     422 	.db	00103$>>8
-      000023s00                     423 	.db	00104$>>8
-      000024s00                     424 	.db	00105$>>8
-      000025s00                     425 	.db	00106$>>8
-      000026s00                     426 	.db	00107$>>8
-      000027s00                     427 	.db	00108$>>8
+      00006F EF               [12]  395 	mov	a,r7
+      000070 24 F8            [12]  396 	add	a,#0xff - 0x07
+      000072 50 03            [24]  397 	jnc	00136$
+      000074 02 00 D3         [24]  398 	ljmp	00109$
+      000077                        399 00136$:
+      000077 EF               [12]  400 	mov	a,r7
+      000078 24 0A            [12]  401 	add	a,#(00137$-3-.)
+      00007A 83               [24]  402 	movc	a,@a+pc
+      00007B F5 82            [12]  403 	mov	dpl,a
+      00007D EF               [12]  404 	mov	a,r7
+      00007E 24 0C            [12]  405 	add	a,#(00138$-3-.)
+      000080 83               [24]  406 	movc	a,@a+pc
+      000081 F5 83            [12]  407 	mov	dph,a
+      000083 E4               [12]  408 	clr	a
+      000084 73               [24]  409 	jmp	@a+dptr
+      000085                        410 00137$:
+      000085 95                     411 	.db	00101$
+      000086 9D                     412 	.db	00102$
+      000087 A5                     413 	.db	00103$
+      000088 AD                     414 	.db	00104$
+      000089 B5                     415 	.db	00105$
+      00008A BD                     416 	.db	00106$
+      00008B C5                     417 	.db	00107$
+      00008C CD                     418 	.db	00108$
+      00008D                        419 00138$:
+      00008D 00                     420 	.db	00101$>>8
+      00008E 00                     421 	.db	00102$>>8
+      00008F 00                     422 	.db	00103$>>8
+      000090 00                     423 	.db	00104$>>8
+      000091 00                     424 	.db	00105$>>8
+      000092 00                     425 	.db	00106$>>8
+      000093 00                     426 	.db	00107$>>8
+      000094 00                     427 	.db	00108$>>8
                                     428 ;	main.c:14: case(0):P2_2=1;P2_3=1;P2_4=1; break;//显示第0位 111
-      000028                        429 00101$:
+      000095                        429 00101$:
                                     430 ;	assignBit
-      000028 D2 A2            [12]  431 	setb	_P2_2
+      000095 D2 A2            [12]  431 	setb	_P2_2
                                     432 ;	assignBit
-      00002A D2 A3            [12]  433 	setb	_P2_3
+      000097 D2 A3            [12]  433 	setb	_P2_3
                                     434 ;	assignBit
-      00002C D2 A4            [12]  435 	setb	_P2_4
+      000099 D2 A4            [12]  435 	setb	_P2_4
                                     436 ;	main.c:15: case(1):P2_2=0;P2_3=1;P2_4=1; break;//显示第1位 011
-      00002E 80 36            [24]  437 	sjmp	00109$
-      000030                        438 00102$:
+      00009B 80 36            [24]  437 	sjmp	00109$
+      00009D                        438 00102$:
                                     439 ;	assignBit
-      000030 C2 A2            [12]  440 	clr	_P2_2
+      00009D C2 A2            [12]  440 	clr	_P2_2
                                     441 ;	assignBit
-      000032 D2 A3            [12]  442 	setb	_P2_3
+      00009F D2 A3            [12]  442 	setb	_P2_3
                                     443 ;	assignBit
-      000034 D2 A4            [12]  444 	setb	_P2_4
+      0000A1 D2 A4            [12]  444 	setb	_P2_4
                                     445 ;	main.c:16: case(2):P2_2=1;P2_3=0;P2_4=1; break;//显示第2位	101
-      000036 80 2E            [24]  446 	sjmp	00109$
-      000038                        447 00103$:
+      0000A3 80 2E            [24]  446 	sjmp	00109$
+      0000A5                        447 00103$:
                                     448 ;	assignBit
-      000038 D2 A2            [12]  449 	setb	_P2_2
+      0000A5 D2 A2            [12]  449 	setb	_P2_2
                                     450 ;	assignBit
-      00003A C2 A3            [12]  451 	clr	_P2_3
+      0000A7 C2 A3            [12]  451 	clr	_P2_3
                                     452 ;	assignBit
-      00003C D2 A4            [12]  453 	setb	_P2_4
+      0000A9 D2 A4            [12]  453 	setb	_P2_4
                                     454 ;	main.c:17: case(3):P2_2=0;P2_3=0;P2_4=1; break;//显示第3位	001
-      00003E 80 26            [24]  455 	sjmp	00109$
-      000040                        456 00104$:
+      0000AB 80 26            [24]  455 	sjmp	00109$
+      0000AD                        456 00104$:
                                     457 ;	assignBit
-      000040 C2 A2            [12]  458 	clr	_P2_2
+      0000AD C2 A2            [12]  458 	clr	_P2_2
                                     459 ;	assignBit
-      000042 C2 A3            [12]  460 	clr	_P2_3
+      0000AF C2 A3            [12]  460 	clr	_P2_3
                                     461 ;	assignBit
-      000044 D2 A4            [12]  462 	setb	_P2_4
+      0000B1 D2 A4            [12]  462 	setb	_P2_4
                                     463 ;	main.c:18: case(4):P2_2=1;P2_3=1;P2_4=0; break;//显示第4位	110
-      000046 80 1E            [24]  464 	sjmp	00109$
-      000048                        465 00105$:
+      0000B3 80 1E            [24]  464 	sjmp	00109$
+      0000B5                        465 00105$:
                                     466 ;	assignBit
-      000048 D2 A2            [12]  467 	setb	_P2_2
+      0000B5 D2 A2            [12]  467 	setb	_P2_2
                                     468 ;	assignBit
-      00004A D2 A3            [12]  469 	setb	_P2_3
+      0000B7 D2 A3            [12]  469 	setb	_P2_3
                                     470 ;	assignBit
-      00004C C2 A4            [12]  471 	clr	_P2_4
+      0000B9 C2 A4            [12]  471 	clr	_P2_4
                                     472 ;	main.c:19: case(5):P2_2=0;P2_3=1;P2_4=0; break;//显示第5位	010
-      00004E 80 16            [24]  473 	sjmp	00109$
-      000050                        474 00106$:
+      0000BB 80 16            [24]  473 	sjmp	00109$
+      0000BD                        474 00106$:
                                     475 ;	assignBit
-      000050 C2 A2            [12]  476 	clr	_P2_2
+      0000BD C2 A2            [12]  476 	clr	_P2_2
                                     477 ;	assignBit
-      000052 D2 A3            [12]  478 	setb	_P2_3
+      0000BF D2 A3            [12]  478 	setb	_P2_3
                                     479 ;	assignBit
-      000054 C2 A4            [12]  480 	clr	_P2_4
+      0000C1 C2 A4            [12]  480 	clr	_P2_4
                                     481 ;	main.c:20: case(6):P2_2=1;P2_3=0;P2_4=0; break;//显示第6位	100
-      000056 80 0E            [24]  482 	sjmp	00109$
-      000058                        483 00107$:
+      0000C3 80 0E            [24]  482 	sjmp	00109$
+      0000C5                        483 00107$:
                                     484 ;	assignBit
-      000058 D2 A2            [12]  485 	setb	_P2_2
+      0000C5 D2 A2            [12]  485 	setb	_P2_2
                                     486 ;	assignBit
-      00005A C2 A3            [12]  487 	clr	_P2_3
+      0000C7 C2 A3            [12]  487 	clr	_P2_3
                                     488 ;	assignBit
-      00005C C2 A4            [12]  489 	clr	_P2_4
+      0000C9 C2 A4            [12]  489 	clr	_P2_4
                                     490 ;	main.c:21: case(7):P2_2=0;P2_3=0;P2_4=0; break;//显示第7位	000
-      00005E 80 06            [24]  491 	sjmp	00109$
-      000060                        492 00108$:
+      0000CB 80 06            [24]  491 	sjmp	00109$
+      0000CD                        492 00108$:
                                     493 ;	assignBit
-      000060 C2 A2            [12]  494 	clr	_P2_2
+      0000CD C2 A2            [12]  494 	clr	_P2_2
                                     495 ;	assignBit
-      000062 C2 A3            [12]  496 	clr	_P2_3
+      0000CF C2 A3            [12]  496 	clr	_P2_3
                                     497 ;	assignBit
-      000064 C2 A4            [12]  498 	clr	_P2_4
+      0000D1 C2 A4            [12]  498 	clr	_P2_4
                                     499 ;	main.c:22: }
-      000066                        500 00109$:
+      0000D3                        500 00109$:
                                     501 ;	main.c:23: P0=DisplayData[i];//发送段码
-      000066 EF               [12]  502 	mov	a,r7
-      000067 24r03            [12]  503 	add	a,#_DisplayData
-      000069 F9               [12]  504 	mov	r1,a
-      00006A 87 80            [24]  505 	mov	_P0,@r1
+      0000D3 EF               [12]  502 	mov	a,r7
+      0000D4 24 0B            [12]  503 	add	a,#_DisplayData
+      0000D6 F9               [12]  504 	mov	r1,a
+      0000D7 87 80            [24]  505 	mov	_P0,@r1
                                     506 ;	main.c:24: for(k=0;k<100;k++); //间隔一段时间扫描	
-      00006C 7E 64            [12]  507 	mov	r6,#0x64
-      00006E                        508 00114$:
-      00006E EE               [12]  509 	mov	a,r6
-      00006F 14               [12]  510 	dec	a
-      000070 FD               [12]  511 	mov	r5,a
-      000071 FE               [12]  512 	mov	r6,a
+      0000D9 7E 64            [12]  507 	mov	r6,#0x64
+      0000DB                        508 00114$:
+      0000DB EE               [12]  509 	mov	a,r6
+      0000DC 14               [12]  510 	dec	a
+      0000DD FD               [12]  511 	mov	r5,a
+      0000DE FE               [12]  512 	mov	r6,a
                                     513 ;	main.c:25: P0=0x00;//消隐
-      000072 70 FA            [24]  514 	jnz	00114$
-      000074 F5 80            [12]  515 	mov	_P0,a
+      0000DF 70 FA            [24]  514 	jnz	00114$
+      0000E1 F5 80            [12]  515 	mov	_P0,a
                                     516 ;	main.c:10: for(i=0;i<8;i++)
-      000076 0F               [12]  517 	inc	r7
-      000077 BF 08 00         [24]  518 	cjne	r7,#0x08,00140$
-      00007A                        519 00140$:
-      00007A 50 03            [24]  520 	jnc	00141$
-      00007C 02r00r02         [24]  521 	ljmp	00115$
-      00007F                        522 00141$:
+      0000E3 0F               [12]  517 	inc	r7
+      0000E4 BF 08 00         [24]  518 	cjne	r7,#0x08,00140$
+      0000E7                        519 00140$:
+      0000E7 50 03            [24]  520 	jnc	00141$
+      0000E9 02 00 6F         [24]  521 	ljmp	00115$
+      0000EC                        522 00141$:
                                     523 ;	main.c:27: }
-      00007F 22               [24]  524 	ret
+      0000EC 22               [24]  524 	ret
                                     525 ;------------------------------------------------------------
                                     526 ;Allocation info for local variables in function 'Timer0Init'
                                     527 ;------------------------------------------------------------
@@ -529,24 +529,24 @@
                                     529 ;	-----------------------------------------
                                     530 ;	 function Timer0Init
                                     531 ;	-----------------------------------------
-      000080                        532 _Timer0Init:
+      0000ED                        532 _Timer0Init:
                                     533 ;	main.c:31: EA=1;		//打开中断总开关
                                     534 ;	assignBit
-      000080 D2 AF            [12]  535 	setb	_EA
+      0000ED D2 AF            [12]  535 	setb	_EA
                                     536 ;	main.c:33: TMOD=0x01;	//选择为定时器0模式，工作方式1，仅用TR0打开启动。
-      000082 75 89 01         [24]  537 	mov	_TMOD,#0x01
+      0000EF 75 89 01         [24]  537 	mov	_TMOD,#0x01
                                     538 ;	main.c:38: TR0=1;		//打开定时器
                                     539 ;	assignBit
-      000085 D2 8C            [12]  540 	setb	_TR0
+      0000F2 D2 8C            [12]  540 	setb	_TR0
                                     541 ;	main.c:39: ET0=1;		//打开定时器0中断
                                     542 ;	assignBit
-      000087 D2 A9            [12]  543 	setb	_ET0
-                                    544 ;	main.c:43: TH0=0xd8;	//1101 1000
-      000089 75 8C D8         [24]  545 	mov	_TH0,#0xd8
-                                    546 ;	main.c:44: TL0=0xf0;	//1111 0000
-      00008C 75 8A F0         [24]  547 	mov	_TL0,#0xf0
+      0000F4 D2 A9            [12]  543 	setb	_ET0
+                                    544 ;	main.c:43: TH0=0xdc;	//1101 1100
+      0000F6 75 8C DC         [24]  545 	mov	_TH0,#0xdc
+                                    546 ;	main.c:44: TL0=0x00;	//0000 0000
+      0000F9 75 8A 00         [24]  547 	mov	_TL0,#0x00
                                     548 ;	main.c:45: }
-      00008F 22               [24]  549 	ret
+      0000FC 22               [24]  549 	ret
                                     550 ;------------------------------------------------------------
                                     551 ;Allocation info for local variables in function 'datapros'
                                     552 ;------------------------------------------------------------
@@ -554,139 +554,139 @@
                                     554 ;	-----------------------------------------
                                     555 ;	 function datapros
                                     556 ;	-----------------------------------------
-      000090                        557 _datapros:
+      0000FD                        557 _datapros:
                                     558 ;	main.c:49: DisplayData[0]=smgduan[min/10];
-      000090 AE*02            [24]  559 	mov	r6,_min
-      000092 7F 00            [12]  560 	mov	r7,#0x00
-      000094 75*00 0A         [24]  561 	mov	__divsint_PARM_2,#0x0a
+      0000FD AE 0A            [24]  559 	mov	r6,_min
+      0000FF 7F 00            [12]  560 	mov	r7,#0x00
+      000101 75 13 0A         [24]  561 	mov	__divsint_PARM_2,#0x0a
                                     562 ;	1-genFromRTrack replaced	mov	(__divsint_PARM_2 + 1),#0x00
-      000097 8F*01            [24]  563 	mov	(__divsint_PARM_2 + 1),r7
-      000099 8E 82            [24]  564 	mov	dpl,r6
-      00009B 8F 83            [24]  565 	mov	dph,r7
-      00009D 12r00r00         [24]  566 	lcall	__divsint
-      0000A0 AE 82            [24]  567 	mov	r6,dpl
-      0000A2 AF 83            [24]  568 	mov	r7,dph
-      0000A4 EE               [12]  569 	mov	a,r6
-      0000A5 24r00            [12]  570 	add	a,#_smgduan
-      0000A7 F5 82            [12]  571 	mov	dpl,a
-      0000A9 EF               [12]  572 	mov	a,r7
-      0000AA 34s00            [12]  573 	addc	a,#(_smgduan >> 8)
-      0000AC F5 83            [12]  574 	mov	dph,a
-      0000AE E4               [12]  575 	clr	a
-      0000AF 93               [24]  576 	movc	a,@a+dptr
-      0000B0 FF               [12]  577 	mov	r7,a
-      0000B1 8F*03            [24]  578 	mov	_DisplayData,r7
+      000104 8F 14            [24]  563 	mov	(__divsint_PARM_2 + 1),r7
+      000106 8E 82            [24]  564 	mov	dpl,r6
+      000108 8F 83            [24]  565 	mov	dph,r7
+      00010A 12 02 BD         [24]  566 	lcall	__divsint
+      00010D AE 82            [24]  567 	mov	r6,dpl
+      00010F AF 83            [24]  568 	mov	r7,dph
+      000111 EE               [12]  569 	mov	a,r6
+      000112 24 F9            [12]  570 	add	a,#_smgduan
+      000114 F5 82            [12]  571 	mov	dpl,a
+      000116 EF               [12]  572 	mov	a,r7
+      000117 34 02            [12]  573 	addc	a,#(_smgduan >> 8)
+      000119 F5 83            [12]  574 	mov	dph,a
+      00011B E4               [12]  575 	clr	a
+      00011C 93               [24]  576 	movc	a,@a+dptr
+      00011D FF               [12]  577 	mov	r7,a
+      00011E 8F 0B            [24]  578 	mov	_DisplayData,r7
                                     579 ;	main.c:50: DisplayData[1]=smgduan[min%10];
-      0000B3 AE*02            [24]  580 	mov	r6,_min
-      0000B5 7F 00            [12]  581 	mov	r7,#0x00
-      0000B7 75*00 0A         [24]  582 	mov	__modsint_PARM_2,#0x0a
+      000120 AE 0A            [24]  580 	mov	r6,_min
+      000122 7F 00            [12]  581 	mov	r7,#0x00
+      000124 75 13 0A         [24]  582 	mov	__modsint_PARM_2,#0x0a
                                     583 ;	1-genFromRTrack replaced	mov	(__modsint_PARM_2 + 1),#0x00
-      0000BA 8F*01            [24]  584 	mov	(__modsint_PARM_2 + 1),r7
-      0000BC 8E 82            [24]  585 	mov	dpl,r6
-      0000BE 8F 83            [24]  586 	mov	dph,r7
-      0000C0 12r00r00         [24]  587 	lcall	__modsint
-      0000C3 AE 82            [24]  588 	mov	r6,dpl
-      0000C5 AF 83            [24]  589 	mov	r7,dph
-      0000C7 EE               [12]  590 	mov	a,r6
-      0000C8 24r00            [12]  591 	add	a,#_smgduan
-      0000CA F5 82            [12]  592 	mov	dpl,a
-      0000CC EF               [12]  593 	mov	a,r7
-      0000CD 34s00            [12]  594 	addc	a,#(_smgduan >> 8)
-      0000CF F5 83            [12]  595 	mov	dph,a
-      0000D1 E4               [12]  596 	clr	a
-      0000D2 93               [24]  597 	movc	a,@a+dptr
-      0000D3 FF               [12]  598 	mov	r7,a
-      0000D4 8F*04            [24]  599 	mov	(_DisplayData + 0x0001),r7
+      000127 8F 14            [24]  584 	mov	(__modsint_PARM_2 + 1),r7
+      000129 8E 82            [24]  585 	mov	dpl,r6
+      00012B 8F 83            [24]  586 	mov	dph,r7
+      00012D 12 02 87         [24]  587 	lcall	__modsint
+      000130 AE 82            [24]  588 	mov	r6,dpl
+      000132 AF 83            [24]  589 	mov	r7,dph
+      000134 EE               [12]  590 	mov	a,r6
+      000135 24 F9            [12]  591 	add	a,#_smgduan
+      000137 F5 82            [12]  592 	mov	dpl,a
+      000139 EF               [12]  593 	mov	a,r7
+      00013A 34 02            [12]  594 	addc	a,#(_smgduan >> 8)
+      00013C F5 83            [12]  595 	mov	dph,a
+      00013E E4               [12]  596 	clr	a
+      00013F 93               [24]  597 	movc	a,@a+dptr
+      000140 FF               [12]  598 	mov	r7,a
+      000141 8F 0C            [24]  599 	mov	(_DisplayData + 0x0001),r7
                                     600 ;	main.c:51: DisplayData[2]=0x40;			//01000000  即显示数码管的g
-      0000D6 75*05 40         [24]  601 	mov	(_DisplayData + 0x0002),#0x40
+      000143 75 0D 40         [24]  601 	mov	(_DisplayData + 0x0002),#0x40
                                     602 ;	main.c:52: DisplayData[3]=smgduan[sec/10];
-      0000D9 AE*01            [24]  603 	mov	r6,_sec
-      0000DB 7F 00            [12]  604 	mov	r7,#0x00
-      0000DD 75*00 0A         [24]  605 	mov	__divsint_PARM_2,#0x0a
+      000146 AE 09            [24]  603 	mov	r6,_sec
+      000148 7F 00            [12]  604 	mov	r7,#0x00
+      00014A 75 13 0A         [24]  605 	mov	__divsint_PARM_2,#0x0a
                                     606 ;	1-genFromRTrack replaced	mov	(__divsint_PARM_2 + 1),#0x00
-      0000E0 8F*01            [24]  607 	mov	(__divsint_PARM_2 + 1),r7
-      0000E2 8E 82            [24]  608 	mov	dpl,r6
-      0000E4 8F 83            [24]  609 	mov	dph,r7
-      0000E6 12r00r00         [24]  610 	lcall	__divsint
-      0000E9 AE 82            [24]  611 	mov	r6,dpl
-      0000EB AF 83            [24]  612 	mov	r7,dph
-      0000ED EE               [12]  613 	mov	a,r6
-      0000EE 24r00            [12]  614 	add	a,#_smgduan
-      0000F0 F5 82            [12]  615 	mov	dpl,a
-      0000F2 EF               [12]  616 	mov	a,r7
-      0000F3 34s00            [12]  617 	addc	a,#(_smgduan >> 8)
-      0000F5 F5 83            [12]  618 	mov	dph,a
-      0000F7 E4               [12]  619 	clr	a
-      0000F8 93               [24]  620 	movc	a,@a+dptr
-      0000F9 FF               [12]  621 	mov	r7,a
-      0000FA 8F*06            [24]  622 	mov	(_DisplayData + 0x0003),r7
+      00014D 8F 14            [24]  607 	mov	(__divsint_PARM_2 + 1),r7
+      00014F 8E 82            [24]  608 	mov	dpl,r6
+      000151 8F 83            [24]  609 	mov	dph,r7
+      000153 12 02 BD         [24]  610 	lcall	__divsint
+      000156 AE 82            [24]  611 	mov	r6,dpl
+      000158 AF 83            [24]  612 	mov	r7,dph
+      00015A EE               [12]  613 	mov	a,r6
+      00015B 24 F9            [12]  614 	add	a,#_smgduan
+      00015D F5 82            [12]  615 	mov	dpl,a
+      00015F EF               [12]  616 	mov	a,r7
+      000160 34 02            [12]  617 	addc	a,#(_smgduan >> 8)
+      000162 F5 83            [12]  618 	mov	dph,a
+      000164 E4               [12]  619 	clr	a
+      000165 93               [24]  620 	movc	a,@a+dptr
+      000166 FF               [12]  621 	mov	r7,a
+      000167 8F 0E            [24]  622 	mov	(_DisplayData + 0x0003),r7
                                     623 ;	main.c:53: DisplayData[4]=smgduan[sec%10];
-      0000FC AE*01            [24]  624 	mov	r6,_sec
-      0000FE 7F 00            [12]  625 	mov	r7,#0x00
-      000100 75*00 0A         [24]  626 	mov	__modsint_PARM_2,#0x0a
+      000169 AE 09            [24]  624 	mov	r6,_sec
+      00016B 7F 00            [12]  625 	mov	r7,#0x00
+      00016D 75 13 0A         [24]  626 	mov	__modsint_PARM_2,#0x0a
                                     627 ;	1-genFromRTrack replaced	mov	(__modsint_PARM_2 + 1),#0x00
-      000103 8F*01            [24]  628 	mov	(__modsint_PARM_2 + 1),r7
-      000105 8E 82            [24]  629 	mov	dpl,r6
-      000107 8F 83            [24]  630 	mov	dph,r7
-      000109 12r00r00         [24]  631 	lcall	__modsint
-      00010C AE 82            [24]  632 	mov	r6,dpl
-      00010E AF 83            [24]  633 	mov	r7,dph
-      000110 EE               [12]  634 	mov	a,r6
-      000111 24r00            [12]  635 	add	a,#_smgduan
-      000113 F5 82            [12]  636 	mov	dpl,a
-      000115 EF               [12]  637 	mov	a,r7
-      000116 34s00            [12]  638 	addc	a,#(_smgduan >> 8)
-      000118 F5 83            [12]  639 	mov	dph,a
-      00011A E4               [12]  640 	clr	a
-      00011B 93               [24]  641 	movc	a,@a+dptr
-      00011C FF               [12]  642 	mov	r7,a
-      00011D 8F*07            [24]  643 	mov	(_DisplayData + 0x0004),r7
+      000170 8F 14            [24]  628 	mov	(__modsint_PARM_2 + 1),r7
+      000172 8E 82            [24]  629 	mov	dpl,r6
+      000174 8F 83            [24]  630 	mov	dph,r7
+      000176 12 02 87         [24]  631 	lcall	__modsint
+      000179 AE 82            [24]  632 	mov	r6,dpl
+      00017B AF 83            [24]  633 	mov	r7,dph
+      00017D EE               [12]  634 	mov	a,r6
+      00017E 24 F9            [12]  635 	add	a,#_smgduan
+      000180 F5 82            [12]  636 	mov	dpl,a
+      000182 EF               [12]  637 	mov	a,r7
+      000183 34 02            [12]  638 	addc	a,#(_smgduan >> 8)
+      000185 F5 83            [12]  639 	mov	dph,a
+      000187 E4               [12]  640 	clr	a
+      000188 93               [24]  641 	movc	a,@a+dptr
+      000189 FF               [12]  642 	mov	r7,a
+      00018A 8F 0F            [24]  643 	mov	(_DisplayData + 0x0004),r7
                                     644 ;	main.c:54: DisplayData[5]=0x40;
-      00011F 75*08 40         [24]  645 	mov	(_DisplayData + 0x0005),#0x40
+      00018C 75 10 40         [24]  645 	mov	(_DisplayData + 0x0005),#0x40
                                     646 ;	main.c:55: DisplayData[6]=smgduan[ssec/10];
-      000122 AE*00            [24]  647 	mov	r6,_ssec
-      000124 7F 00            [12]  648 	mov	r7,#0x00
-      000126 75*00 0A         [24]  649 	mov	__divsint_PARM_2,#0x0a
+      00018F AE 08            [24]  647 	mov	r6,_ssec
+      000191 7F 00            [12]  648 	mov	r7,#0x00
+      000193 75 13 0A         [24]  649 	mov	__divsint_PARM_2,#0x0a
                                     650 ;	1-genFromRTrack replaced	mov	(__divsint_PARM_2 + 1),#0x00
-      000129 8F*01            [24]  651 	mov	(__divsint_PARM_2 + 1),r7
-      00012B 8E 82            [24]  652 	mov	dpl,r6
-      00012D 8F 83            [24]  653 	mov	dph,r7
-      00012F 12r00r00         [24]  654 	lcall	__divsint
-      000132 AE 82            [24]  655 	mov	r6,dpl
-      000134 AF 83            [24]  656 	mov	r7,dph
-      000136 EE               [12]  657 	mov	a,r6
-      000137 24r00            [12]  658 	add	a,#_smgduan
-      000139 F5 82            [12]  659 	mov	dpl,a
-      00013B EF               [12]  660 	mov	a,r7
-      00013C 34s00            [12]  661 	addc	a,#(_smgduan >> 8)
-      00013E F5 83            [12]  662 	mov	dph,a
-      000140 E4               [12]  663 	clr	a
-      000141 93               [24]  664 	movc	a,@a+dptr
-      000142 FF               [12]  665 	mov	r7,a
-      000143 8F*09            [24]  666 	mov	(_DisplayData + 0x0006),r7
+      000196 8F 14            [24]  651 	mov	(__divsint_PARM_2 + 1),r7
+      000198 8E 82            [24]  652 	mov	dpl,r6
+      00019A 8F 83            [24]  653 	mov	dph,r7
+      00019C 12 02 BD         [24]  654 	lcall	__divsint
+      00019F AE 82            [24]  655 	mov	r6,dpl
+      0001A1 AF 83            [24]  656 	mov	r7,dph
+      0001A3 EE               [12]  657 	mov	a,r6
+      0001A4 24 F9            [12]  658 	add	a,#_smgduan
+      0001A6 F5 82            [12]  659 	mov	dpl,a
+      0001A8 EF               [12]  660 	mov	a,r7
+      0001A9 34 02            [12]  661 	addc	a,#(_smgduan >> 8)
+      0001AB F5 83            [12]  662 	mov	dph,a
+      0001AD E4               [12]  663 	clr	a
+      0001AE 93               [24]  664 	movc	a,@a+dptr
+      0001AF FF               [12]  665 	mov	r7,a
+      0001B0 8F 11            [24]  666 	mov	(_DisplayData + 0x0006),r7
                                     667 ;	main.c:56: DisplayData[7]=smgduan[ssec%10];
-      000145 AE*00            [24]  668 	mov	r6,_ssec
-      000147 7F 00            [12]  669 	mov	r7,#0x00
-      000149 75*00 0A         [24]  670 	mov	__modsint_PARM_2,#0x0a
+      0001B2 AE 08            [24]  668 	mov	r6,_ssec
+      0001B4 7F 00            [12]  669 	mov	r7,#0x00
+      0001B6 75 13 0A         [24]  670 	mov	__modsint_PARM_2,#0x0a
                                     671 ;	1-genFromRTrack replaced	mov	(__modsint_PARM_2 + 1),#0x00
-      00014C 8F*01            [24]  672 	mov	(__modsint_PARM_2 + 1),r7
-      00014E 8E 82            [24]  673 	mov	dpl,r6
-      000150 8F 83            [24]  674 	mov	dph,r7
-      000152 12r00r00         [24]  675 	lcall	__modsint
-      000155 AE 82            [24]  676 	mov	r6,dpl
-      000157 AF 83            [24]  677 	mov	r7,dph
-      000159 EE               [12]  678 	mov	a,r6
-      00015A 24r00            [12]  679 	add	a,#_smgduan
-      00015C F5 82            [12]  680 	mov	dpl,a
-      00015E EF               [12]  681 	mov	a,r7
-      00015F 34s00            [12]  682 	addc	a,#(_smgduan >> 8)
-      000161 F5 83            [12]  683 	mov	dph,a
-      000163 E4               [12]  684 	clr	a
-      000164 93               [24]  685 	movc	a,@a+dptr
-      000165 FF               [12]  686 	mov	r7,a
-      000166 8F*0A            [24]  687 	mov	(_DisplayData + 0x0007),r7
+      0001B9 8F 14            [24]  672 	mov	(__modsint_PARM_2 + 1),r7
+      0001BB 8E 82            [24]  673 	mov	dpl,r6
+      0001BD 8F 83            [24]  674 	mov	dph,r7
+      0001BF 12 02 87         [24]  675 	lcall	__modsint
+      0001C2 AE 82            [24]  676 	mov	r6,dpl
+      0001C4 AF 83            [24]  677 	mov	r7,dph
+      0001C6 EE               [12]  678 	mov	a,r6
+      0001C7 24 F9            [12]  679 	add	a,#_smgduan
+      0001C9 F5 82            [12]  680 	mov	dpl,a
+      0001CB EF               [12]  681 	mov	a,r7
+      0001CC 34 02            [12]  682 	addc	a,#(_smgduan >> 8)
+      0001CE F5 83            [12]  683 	mov	dph,a
+      0001D0 E4               [12]  684 	clr	a
+      0001D1 93               [24]  685 	movc	a,@a+dptr
+      0001D2 FF               [12]  686 	mov	r7,a
+      0001D3 8F 12            [24]  687 	mov	(_DisplayData + 0x0007),r7
                                     688 ;	main.c:57: }
-      000168 22               [24]  689 	ret
+      0001D5 22               [24]  689 	ret
                                     690 ;------------------------------------------------------------
                                     691 ;Allocation info for local variables in function 'Timer0'
                                     692 ;------------------------------------------------------------
@@ -694,41 +694,41 @@
                                     694 ;	-----------------------------------------
                                     695 ;	 function Timer0
                                     696 ;	-----------------------------------------
-      000169                        697 _Timer0:
-      000169 C0 E0            [24]  698 	push	acc
-      00016B C0 D0            [24]  699 	push	psw
-                                    700 ;	main.c:61: TH0=0xd8;	//1101 1000
-      00016D 75 8C D8         [24]  701 	mov	_TH0,#0xd8
-                                    702 ;	main.c:62: TL0=0xf0;	//1111 0000
-      000170 75 8A F0         [24]  703 	mov	_TL0,#0xf0
+      0001D6                        697 _Timer0:
+      0001D6 C0 E0            [24]  698 	push	acc
+      0001D8 C0 D0            [24]  699 	push	psw
+                                    700 ;	main.c:61: TH0=0xdc;	//1101 1100
+      0001DA 75 8C DC         [24]  701 	mov	_TH0,#0xdc
+                                    702 ;	main.c:62: TL0=0x00;	//0000 0000
+      0001DD 75 8A 00         [24]  703 	mov	_TL0,#0x00
                                     704 ;	main.c:63: ssec++;
-      000173 05*00            [12]  705 	inc	_ssec
+      0001E0 05 08            [12]  705 	inc	_ssec
                                     706 ;	main.c:64: if(ssec>=100)
-      000175 74 9C            [12]  707 	mov	a,#0x100 - 0x64
-      000177 25*00            [12]  708 	add	a,_ssec
-      000179 50 19            [24]  709 	jnc	00107$
+      0001E2 74 9C            [12]  707 	mov	a,#0x100 - 0x64
+      0001E4 25 08            [12]  708 	add	a,_ssec
+      0001E6 50 19            [24]  709 	jnc	00107$
                                     710 ;	main.c:66: ssec=0;
-      00017B 75*00 00         [24]  711 	mov	_ssec,#0x00
+      0001E8 75 08 00         [24]  711 	mov	_ssec,#0x00
                                     712 ;	main.c:67: sec++;
-      00017E 05*01            [12]  713 	inc	_sec
+      0001EB 05 09            [12]  713 	inc	_sec
                                     714 ;	main.c:68: if(sec>=60)
-      000180 74 C4            [12]  715 	mov	a,#0x100 - 0x3c
-      000182 25*01            [12]  716 	add	a,_sec
-      000184 50 0E            [24]  717 	jnc	00107$
+      0001ED 74 C4            [12]  715 	mov	a,#0x100 - 0x3c
+      0001EF 25 09            [12]  716 	add	a,_sec
+      0001F1 50 0E            [24]  717 	jnc	00107$
                                     718 ;	main.c:70: sec=0;
-      000186 75*01 00         [24]  719 	mov	_sec,#0x00
+      0001F3 75 09 00         [24]  719 	mov	_sec,#0x00
                                     720 ;	main.c:71: min++;
-      000189 05*02            [12]  721 	inc	_min
+      0001F6 05 0A            [12]  721 	inc	_min
                                     722 ;	main.c:72: if(min>=60) min=0;
-      00018B 74 C4            [12]  723 	mov	a,#0x100 - 0x3c
-      00018D 25*02            [12]  724 	add	a,_min
-      00018F 50 03            [24]  725 	jnc	00107$
-      000191 75*02 00         [24]  726 	mov	_min,#0x00
-      000194                        727 00107$:
+      0001F8 74 C4            [12]  723 	mov	a,#0x100 - 0x3c
+      0001FA 25 0A            [12]  724 	add	a,_min
+      0001FC 50 03            [24]  725 	jnc	00107$
+      0001FE 75 0A 00         [24]  726 	mov	_min,#0x00
+      000201                        727 00107$:
                                     728 ;	main.c:75: }
-      000194 D0 D0            [24]  729 	pop	psw
-      000196 D0 E0            [24]  730 	pop	acc
-      000198 32               [24]  731 	reti
+      000201 D0 D0            [24]  729 	pop	psw
+      000203 D0 E0            [24]  730 	pop	acc
+      000205 32               [24]  731 	reti
                                     732 ;	eliminated unneeded mov psw,# (no regs used in bank)
                                     733 ;	eliminated unneeded push/pop dpl
                                     734 ;	eliminated unneeded push/pop dph
@@ -740,36 +740,36 @@
                                     740 ;	-----------------------------------------
                                     741 ;	 function main
                                     742 ;	-----------------------------------------
-      000199                        743 _main:
+      000206                        743 _main:
                                     744 ;	main.c:79: Timer0Init();
-      000199 12r00r80         [24]  745 	lcall	_Timer0Init
+      000206 12 00 ED         [24]  745 	lcall	_Timer0Init
                                     746 ;	main.c:80: while(1)
-      00019C                        747 00102$:
+      000209                        747 00102$:
                                     748 ;	main.c:82: datapros();
-      00019C 12r00r90         [24]  749 	lcall	_datapros
+      000209 12 00 FD         [24]  749 	lcall	_datapros
                                     750 ;	main.c:83: DigDisplay();
-      00019F 12r00r00         [24]  751 	lcall	_DigDisplay
+      00020C 12 00 6D         [24]  751 	lcall	_DigDisplay
                                     752 ;	main.c:85: }
-      0001A2 80 F8            [24]  753 	sjmp	00102$
+      00020F 80 F8            [24]  753 	sjmp	00102$
                                     754 	.area CSEG    (CODE)
                                     755 	.area CONST   (CODE)
-      000000                        756 _smgduan:
-      000000 3F                     757 	.db #0x3f	; 63
-      000001 06                     758 	.db #0x06	; 6
-      000002 5B                     759 	.db #0x5b	; 91
-      000003 4F                     760 	.db #0x4f	; 79	'O'
-      000004 66                     761 	.db #0x66	; 102	'f'
-      000005 6D                     762 	.db #0x6d	; 109	'm'
-      000006 7D                     763 	.db #0x7d	; 125
-      000007 07                     764 	.db #0x07	; 7
-      000008 7F                     765 	.db #0x7f	; 127
-      000009 6F                     766 	.db #0x6f	; 111	'o'
-      00000A 77                     767 	.db #0x77	; 119	'w'
-      00000B 7C                     768 	.db #0x7c	; 124
-      00000C 39                     769 	.db #0x39	; 57	'9'
-      00000D 5E                     770 	.db #0x5e	; 94
-      00000E 79                     771 	.db #0x79	; 121	'y'
-      00000F 71                     772 	.db #0x71	; 113	'q'
-      000010 00                     773 	.db 0x00
+      0002F9                        756 _smgduan:
+      0002F9 3F                     757 	.db #0x3f	; 63
+      0002FA 06                     758 	.db #0x06	; 6
+      0002FB 5B                     759 	.db #0x5b	; 91
+      0002FC 4F                     760 	.db #0x4f	; 79	'O'
+      0002FD 66                     761 	.db #0x66	; 102	'f'
+      0002FE 6D                     762 	.db #0x6d	; 109	'm'
+      0002FF 7D                     763 	.db #0x7d	; 125
+      000300 07                     764 	.db #0x07	; 7
+      000301 7F                     765 	.db #0x7f	; 127
+      000302 6F                     766 	.db #0x6f	; 111	'o'
+      000303 77                     767 	.db #0x77	; 119	'w'
+      000304 7C                     768 	.db #0x7c	; 124
+      000305 39                     769 	.db #0x39	; 57	'9'
+      000306 5E                     770 	.db #0x5e	; 94
+      000307 79                     771 	.db #0x79	; 121	'y'
+      000308 71                     772 	.db #0x71	; 113	'q'
+      000309 00                     773 	.db 0x00
                                     774 	.area XINIT   (CODE)
                                     775 	.area CABS    (ABS,CODE)

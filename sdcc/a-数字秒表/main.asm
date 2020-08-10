@@ -541,10 +541,10 @@ _Timer0Init:
 ;	main.c:39: ET0=1;		//打开定时器0中断
 ;	assignBit
 	setb	_ET0
-;	main.c:43: TH0=0xd8;	//1101 1000
-	mov	_TH0,#0xd8
-;	main.c:44: TL0=0xf0;	//1111 0000
-	mov	_TL0,#0xf0
+;	main.c:43: TH0=0xdc;	//1101 1100
+	mov	_TH0,#0xdc
+;	main.c:44: TL0=0x00;	//0000 0000
+	mov	_TL0,#0x00
 ;	main.c:45: }
 	ret
 ;------------------------------------------------------------
@@ -697,10 +697,10 @@ _datapros:
 _Timer0:
 	push	acc
 	push	psw
-;	main.c:61: TH0=0xd8;	//1101 1000
-	mov	_TH0,#0xd8
-;	main.c:62: TL0=0xf0;	//1111 0000
-	mov	_TL0,#0xf0
+;	main.c:61: TH0=0xdc;	//1101 1100
+	mov	_TH0,#0xdc
+;	main.c:62: TL0=0x00;	//0000 0000
+	mov	_TL0,#0x00
 ;	main.c:63: ssec++;
 	inc	_ssec
 ;	main.c:64: if(ssec>=100)
