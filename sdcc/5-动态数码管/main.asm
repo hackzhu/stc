@@ -390,24 +390,24 @@ _DigDisplay:
 	clr	a
 	jmp	@a+dptr
 00137$:
-	.db	00101$
-	.db	00102$
-	.db	00103$
-	.db	00104$
-	.db	00105$
-	.db	00106$
-	.db	00107$
 	.db	00108$
+	.db	00107$
+	.db	00106$
+	.db	00105$
+	.db	00104$
+	.db	00103$
+	.db	00102$
+	.db	00101$
 00138$:
-	.db	00101$>>8
-	.db	00102$>>8
-	.db	00103$>>8
-	.db	00104$>>8
-	.db	00105$>>8
-	.db	00106$>>8
-	.db	00107$>>8
 	.db	00108$>>8
-;	main.c:15: case(0):LSA=1;LSB=1;LSC=1; break;//显示第0位 111
+	.db	00107$>>8
+	.db	00106$>>8
+	.db	00105$>>8
+	.db	00104$>>8
+	.db	00103$>>8
+	.db	00102$>>8
+	.db	00101$>>8
+;	main.c:15: case(7):LSA=1;LSB=1;LSC=1; break;//显示第7位 111  7
 00101$:
 ;	assignBit
 	setb	_P2_2
@@ -415,7 +415,7 @@ _DigDisplay:
 	setb	_P2_3
 ;	assignBit
 	setb	_P2_4
-;	main.c:16: case(1):LSA=0;LSB=1;LSC=1; break;//显示第1位 011
+;	main.c:16: case(6):LSA=0;LSB=1;LSC=1; break;//显示第6位 011  6
 	sjmp	00109$
 00102$:
 ;	assignBit
@@ -424,7 +424,7 @@ _DigDisplay:
 	setb	_P2_3
 ;	assignBit
 	setb	_P2_4
-;	main.c:17: case(2):LSA=1;LSB=0;LSC=1; break;//显示第2位 101
+;	main.c:17: case(5):LSA=1;LSB=0;LSC=1; break;//显示第5位 101  5
 	sjmp	00109$
 00103$:
 ;	assignBit
@@ -433,7 +433,7 @@ _DigDisplay:
 	clr	_P2_3
 ;	assignBit
 	setb	_P2_4
-;	main.c:18: case(3):LSA=0;LSB=0;LSC=1; break;//显示第3位 001
+;	main.c:18: case(4):LSA=0;LSB=0;LSC=1; break;//显示第4位 001  4
 	sjmp	00109$
 00104$:
 ;	assignBit
@@ -442,7 +442,7 @@ _DigDisplay:
 	clr	_P2_3
 ;	assignBit
 	setb	_P2_4
-;	main.c:19: case(4):LSA=1;LSB=1;LSC=0; break;//显示第4位 110
+;	main.c:19: case(3):LSA=1;LSB=1;LSC=0; break;//显示第3位 110  3
 	sjmp	00109$
 00105$:
 ;	assignBit
@@ -451,7 +451,7 @@ _DigDisplay:
 	setb	_P2_3
 ;	assignBit
 	clr	_P2_4
-;	main.c:20: case(5):LSA=0;LSB=1;LSC=0; break;//显示第5位 010
+;	main.c:20: case(2):LSA=0;LSB=1;LSC=0; break;//显示第2位 010  2
 	sjmp	00109$
 00106$:
 ;	assignBit
@@ -460,7 +460,7 @@ _DigDisplay:
 	setb	_P2_3
 ;	assignBit
 	clr	_P2_4
-;	main.c:21: case(6):LSA=1;LSB=0;LSC=0; break;//显示第6位 100
+;	main.c:21: case(1):LSA=1;LSB=0;LSC=0; break;//显示第1位 100  1
 	sjmp	00109$
 00107$:
 ;	assignBit
@@ -469,7 +469,7 @@ _DigDisplay:
 	clr	_P2_3
 ;	assignBit
 	clr	_P2_4
-;	main.c:22: case(7):LSA=0;LSB=0;LSC=0; break;//显示第7位 000
+;	main.c:22: case(0):LSA=0;LSB=0;LSC=0; break;//显示第0位 000  0
 	sjmp	00109$
 00108$:
 ;	assignBit
