@@ -460,23 +460,20 @@
                                     460 ;	lcd.c:35: lcdwritecom(0x38);
       000056 75 82 38         [24]  461 	mov	dpl,#0x38
       000059 12r00r20         [24]  462 	lcall	_lcdwritecom
-                                    463 ;	lcd.c:36: lcdwritecom(0x28);
-      00005C 75 82 28         [24]  464 	mov	dpl,#0x28
+                                    463 ;	lcd.c:36: lcdwritecom(0x0c);
+      00005C 75 82 0C         [24]  464 	mov	dpl,#0x0c
       00005F 12r00r20         [24]  465 	lcall	_lcdwritecom
-                                    466 ;	lcd.c:37: lcdwritecom(0x0c);
-      000062 75 82 0C         [24]  467 	mov	dpl,#0x0c
+                                    466 ;	lcd.c:37: lcdwritecom(0x06);
+      000062 75 82 06         [24]  467 	mov	dpl,#0x06
       000065 12r00r20         [24]  468 	lcall	_lcdwritecom
-                                    469 ;	lcd.c:38: lcdwritecom(0x06);
-      000068 75 82 06         [24]  470 	mov	dpl,#0x06
+                                    469 ;	lcd.c:38: lcdwritecom(0x01);
+      000068 75 82 01         [24]  470 	mov	dpl,#0x01
       00006B 12r00r20         [24]  471 	lcall	_lcdwritecom
-                                    472 ;	lcd.c:39: lcdwritecom(0x01);
-      00006E 75 82 01         [24]  473 	mov	dpl,#0x01
-      000071 12r00r20         [24]  474 	lcall	_lcdwritecom
-                                    475 ;	lcd.c:40: lcdwritecom(0x83);
-      000074 75 82 83         [24]  476 	mov	dpl,#0x83
-                                    477 ;	lcd.c:42: }
-      000077 02r00r20         [24]  478 	ljmp	_lcdwritecom
-                                    479 	.area CSEG    (CODE)
-                                    480 	.area CONST   (CODE)
-                                    481 	.area XINIT   (CODE)
-                                    482 	.area CABS    (ABS,CODE)
+                                    472 ;	lcd.c:39: lcdwritecom(0x80);
+      00006E 75 82 80         [24]  473 	mov	dpl,#0x80
+                                    474 ;	lcd.c:41: }
+      000071 02r00r20         [24]  475 	ljmp	_lcdwritecom
+                                    476 	.area CSEG    (CODE)
+                                    477 	.area CONST   (CODE)
+                                    478 	.area XINIT   (CODE)
+                                    479 	.area CABS    (ABS,CODE)

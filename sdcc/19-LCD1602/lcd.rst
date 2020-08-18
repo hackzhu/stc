@@ -460,23 +460,20 @@
                                     460 ;	lcd.c:35: lcdwritecom(0x38);
       000105 75 82 38         [24]  461 	mov	dpl,#0x38
       000108 12 00 CF         [24]  462 	lcall	_lcdwritecom
-                                    463 ;	lcd.c:36: lcdwritecom(0x28);
-      00010B 75 82 28         [24]  464 	mov	dpl,#0x28
+                                    463 ;	lcd.c:36: lcdwritecom(0x0c);
+      00010B 75 82 0C         [24]  464 	mov	dpl,#0x0c
       00010E 12 00 CF         [24]  465 	lcall	_lcdwritecom
-                                    466 ;	lcd.c:37: lcdwritecom(0x0c);
-      000111 75 82 0C         [24]  467 	mov	dpl,#0x0c
+                                    466 ;	lcd.c:37: lcdwritecom(0x06);
+      000111 75 82 06         [24]  467 	mov	dpl,#0x06
       000114 12 00 CF         [24]  468 	lcall	_lcdwritecom
-                                    469 ;	lcd.c:38: lcdwritecom(0x06);
-      000117 75 82 06         [24]  470 	mov	dpl,#0x06
+                                    469 ;	lcd.c:38: lcdwritecom(0x01);
+      000117 75 82 01         [24]  470 	mov	dpl,#0x01
       00011A 12 00 CF         [24]  471 	lcall	_lcdwritecom
-                                    472 ;	lcd.c:39: lcdwritecom(0x01);
-      00011D 75 82 01         [24]  473 	mov	dpl,#0x01
-      000120 12 00 CF         [24]  474 	lcall	_lcdwritecom
-                                    475 ;	lcd.c:40: lcdwritecom(0x83);
-      000123 75 82 83         [24]  476 	mov	dpl,#0x83
-                                    477 ;	lcd.c:42: }
-      000126 02 00 CF         [24]  478 	ljmp	_lcdwritecom
-                                    479 	.area CSEG    (CODE)
-                                    480 	.area CONST   (CODE)
-                                    481 	.area XINIT   (CODE)
-                                    482 	.area CABS    (ABS,CODE)
+                                    472 ;	lcd.c:39: lcdwritecom(0x80);
+      00011D 75 82 80         [24]  473 	mov	dpl,#0x80
+                                    474 ;	lcd.c:41: }
+      000120 02 00 CF         [24]  475 	ljmp	_lcdwritecom
+                                    476 	.area CSEG    (CODE)
+                                    477 	.area CONST   (CODE)
+                                    478 	.area XINIT   (CODE)
+                                    479 	.area CABS    (ABS,CODE)

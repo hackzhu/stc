@@ -33,10 +33,9 @@ lcde=0;
 void lcdinit()
 {
 	lcdwritecom(0x38);
-	lcdwritecom(0x28);
 	lcdwritecom(0x0c);
 	lcdwritecom(0x06);
 	lcdwritecom(0x01);
-	lcdwritecom(0x83);
+	lcdwritecom(0x80);
 
 }

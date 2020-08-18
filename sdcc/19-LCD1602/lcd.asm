@@ -460,21 +460,18 @@ _lcdinit:
 ;	lcd.c:35: lcdwritecom(0x38);
 	mov	dpl,#0x38
 	lcall	_lcdwritecom
-;	lcd.c:36: lcdwritecom(0x28);
-	mov	dpl,#0x28
-	lcall	_lcdwritecom
-;	lcd.c:37: lcdwritecom(0x0c);
+;	lcd.c:36: lcdwritecom(0x0c);
 	mov	dpl,#0x0c
 	lcall	_lcdwritecom
-;	lcd.c:38: lcdwritecom(0x06);
+;	lcd.c:37: lcdwritecom(0x06);
 	mov	dpl,#0x06
 	lcall	_lcdwritecom
-;	lcd.c:39: lcdwritecom(0x01);
+;	lcd.c:38: lcdwritecom(0x01);
 	mov	dpl,#0x01
 	lcall	_lcdwritecom
-;	lcd.c:40: lcdwritecom(0x83);
-	mov	dpl,#0x83
-;	lcd.c:42: }
+;	lcd.c:39: lcdwritecom(0x80);
+	mov	dpl,#0x80
+;	lcd.c:41: }
 	ljmp	_lcdwritecom
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
