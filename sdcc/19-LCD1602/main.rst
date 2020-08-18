@@ -390,7 +390,7 @@
                            000001   390 	ar1 = 0x01
                            000000   391 	ar0 = 0x00
                                     392 ;	main.c:9: lcdinit();
-      000095 12 00 00         [24]  393 	lcall	_lcdinit
+      000095 12 01 05         [24]  393 	lcall	_lcdinit
                                     394 ;	main.c:10: for(i=0;i<16;i++) lcdwritedate(disp[i]);
       000098 7F 00            [12]  395 	mov	r7,#0x00
       00009A                        396 00105$:
@@ -399,7 +399,7 @@
       00009D F9               [12]  399 	mov	r1,a
       00009E 87 82            [24]  400 	mov	dpl,@r1
       0000A0 C0 07            [24]  401 	push	ar7
-      0000A2 12 00 00         [24]  402 	lcall	_lcdwritedate
+      0000A2 12 00 EA         [24]  402 	lcall	_lcdwritedate
       0000A5 D0 07            [24]  403 	pop	ar7
       0000A7 0F               [12]  404 	inc	r7
       0000A8 BF 10 00         [24]  405 	cjne	r7,#0x10,00118$
@@ -407,7 +407,7 @@
       0000AB 40 ED            [24]  407 	jc	00105$
                                     408 ;	main.c:11: while(1);
       0000AD                        409 00103$:
-                                    410 ;	main.c:13: }
+                                    410 ;	main.c:12: }
       0000AD 80 FE            [24]  411 	sjmp	00103$
                                     412 	.area CSEG    (CODE)
                                     413 	.area CONST   (CODE)

@@ -9,5 +9,4 @@ void main()
 	lcdinit();
 	for(i=0;i<16;i++) lcdwritedate(disp[i]);
 	while(1);
-
 }

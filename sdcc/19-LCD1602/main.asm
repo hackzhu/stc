@@ -407,7 +407,7 @@ _main:
 	jc	00105$
 ;	main.c:11: while(1);
 00103$:
-;	main.c:13: }
+;	main.c:12: }
 	sjmp	00103$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

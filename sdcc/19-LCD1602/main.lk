@@ -15,5 +15,6 @@
 -l liblong
 -l libfloat
 main.rel
+lcd.rel
 
 -e

@@ -407,7 +407,7 @@
       000016 40 ED            [24]  407 	jc	00105$
                                     408 ;	main.c:11: while(1);
       000018                        409 00103$:
-                                    410 ;	main.c:13: }
+                                    410 ;	main.c:12: }
       000018 80 FE            [24]  411 	sjmp	00103$
                                     412 	.area CSEG    (CODE)
                                     413 	.area CONST   (CODE)
